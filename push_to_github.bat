@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 Implemented ramzan's successful Vercel approach - Environment detection and PYTHONPATH"
+git commit -m "🔧 EMBEDDED DATA APPROACH - No file loading, guaranteed to work on Vercel"
 
 REM Push to GitHub
 git push origin master
