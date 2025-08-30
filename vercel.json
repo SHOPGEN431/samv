@@ -14,7 +14,7 @@
   ],
   "functions": {
     "app.py": {
-      "includeFiles": "LLC Data.csv",
+      "includeFiles": "LLC_Data_Optimized.csv,LLC_Data_Optimized.json,LLC Data.csv",
       "maxDuration": 30
     }
   }
