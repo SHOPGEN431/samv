@@ -8,6 +8,38 @@
   ],
   "routes": [
     {
+      "src": "/use-cases/(.*)/(.*)/",
+      "dest": "/use-cases/$1/$2/index.html"
+    },
+    {
+      "src": "/use-cases/(.*)/",
+      "dest": "/use-cases/$1/index.html"
+    },
+    {
+      "src": "/tools/(.*)/",
+      "dest": "/tools/$1/index.html"
+    },
+    {
+      "src": "/about/",
+      "dest": "/about/index.html"
+    },
+    {
+      "src": "/contact/",
+      "dest": "/contact/index.html"
+    },
+    {
+      "src": "/privacy/",
+      "dest": "/privacy/index.html"
+    },
+    {
+      "src": "/disclosure/",
+      "dest": "/disclosure/index.html"
+    },
+    {
+      "src": "/terms/",
+      "dest": "/terms/index.html"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },
@@ -21,3 +53,4 @@
     }
   ]
 }
+
