@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 FIXED TEMPLATE COMPATIBILITY - Added missing functions and correct data structure"
+git commit -m "🔧 STATIC HTML APPROACH - Following ramzan's successful deployment method"
 
 REM Push to GitHub
 git push origin master

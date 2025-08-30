@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizLLCFinder - Find LLC Formation Services for All Business Types</title>
+    <meta name="description" content="Find the best LLC registration and formation services for all business types across all 50 states and DC.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .stats-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .search-box {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        .use-case-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        .use-case-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        BizLLCFinder - Complete LLC Formation Directory
+                    </h1>
+                    <p class="lead mb-4">
+                        Find the best LLC registration and formation services for all business types. 
+                        Professional services tailored to your specific industry needs across all 50 states and DC.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fas fa-building fa-6x text-light opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="container mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-building fa-3x mb-3 text-primary"></i>
+                    <h3>3,706</h3>
+                    <p class="mb-0">Total Businesses</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-map-marker-alt fa-3x mb-3 text-success"></i>
+                    <h3>51</h3>
+                    <p class="mb-0">States Covered</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-star fa-3x mb-3 text-warning"></i>
+                    <h3>4.5+</h3>
+                    <p class="mb-0">Average Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container mb-5">
+        <div class="search-box">
+            <h3 class="text-center mb-4">Find LLC Formation Services for Your Business</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="stateSelect" class="form-label">State</label>
+                    <select class="form-select" id="stateSelect">
+                        <option value="">All States</option>
+                        <option value="CA">California</option>
+                        <option value="NY">New York</option>
+                        <option value="TX">Texas</option>
+                        <option value="FL">Florida</option>
+                        <option value="IL">Illinois</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="categorySelect" class="form-label">LLC Service Type</label>
+                    <select class="form-select" id="categorySelect">
+                        <option value="">All LLC Services</option>
+                        <option value="doctors">LLC for Doctors</option>
+                        <option value="rental-properties">LLC for Rental Properties</option>
+                        <option value="vending-machines">LLC for Vending Machines</option>
+                        <option value="realtors">LLC for Realtors</option>
+                        <option value="small-business">LLC for Small Business</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-primary w-100">Search Businesses</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="container mb-5">
+        <h2 class="text-center mb-4">LLC Formation Services for All Business Types</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="use-case-card">
+                    <h5><i class="fas fa-user-md text-primary"></i> LLC for Doctors</h5>
+                    <p>Professional medical practice LLC formation services with compliance expertise.</p>
+                    <a href="/use-cases/doctors/" class="btn btn-outline-primary btn-sm">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="use-case-card">
+                    <h5><i class="fas fa-home text-success"></i> LLC for Rental Properties</h5>
+                    <p>Real estate investment LLC formation with asset protection strategies.</p>
+                    <a href="/use-cases/rental-properties/" class="btn btn-outline-success btn-sm">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="use-case-card">
+                    <h5><i class="fas fa-truck text-warning"></i> LLC for Trucking</h5>
+                    <p>Transportation business LLC formation with DOT compliance support.</p>
+                    <a href="/use-cases/trucking/" class="btn btn-outline-warning btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BizLLCFinder</h5>
+                    <p>Complete LLC formation directory for all business types.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>&copy; 2025 BizLLCFinder. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

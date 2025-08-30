@@ -166,32 +166,13 @@ load_data_from_csv()
 
 @app.route('/')
 def index():
-    """Homepage"""
-    # Get all states as a simple list for the template
-    states = list(states_data.keys())
-    states.sort()
+    """Homepage - serve static HTML like ramzan repository"""
+    return app.send_static_file('index.html')
 
-    # Get top rated businesses
-    top_rated = []
-    for business in businesses_data:
-        if business.get('rating'):
-            try:
-                rating = float(business['rating'])
-                if rating >= 4.0:
-                    top_rated.append(business)
-            except:
-                pass
-    
-    # Sort by rating and take top 10
-    top_rated.sort(key=lambda x: float(x.get('rating', 0)), reverse=True)
-    top_rated = top_rated[:10]
-
-    return render_template('home.html',
-                         total_businesses=len(businesses_data),
-                         states=states,
-                         states_count=51,  # 50 states + DC
-                         top_rated=top_rated,
-                         get_state_full_name=get_state_full_name)
+@app.route('/index.html')
+def index_html():
+    """Alternative route for index.html"""
+    return app.send_static_file('index.html')
 
 @app.route('/about/')
 def about():
