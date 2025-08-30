@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - BizLLCFinder{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    About BizLLCFinder
+                </h1>
+                <p class="lead mb-4">
+                    Your trusted resource for finding the best LLC registration and formation services across all 50 states and the District of Columbia.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-info-circle fa-6x text-light opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Content -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+                                <h2 class="mb-4">Our Mission</h2>
+                    <p class="lead mb-4">
+                        At BizLLCFinder, we're dedicated to simplifying the LLC formation process for entrepreneurs and business owners across the United States. Our comprehensive directory connects you with trusted, professional LLC registration services tailored to your specific industry and business needs.
+                    </p>
+            
+            <h3 class="mb-3">What We Do</h3>
+            <p class="mb-4">
+                We've curated a comprehensive database of LLC formation services, organized by industry and location, to help you find the perfect service provider for your business. Whether you're a doctor starting a medical practice, a real estate investor managing rental properties, or an entrepreneur launching an e-commerce business, we have the resources you need.
+            </p>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Comprehensive Directory</h5>
+                            <p class="card-text">Access thousands of verified LLC formation services across all 50 states and DC.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-filter fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Industry-Specific</h5>
+                            <p class="card-text">Find services tailored to your specific industry and business type.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">Our Coverage</h3>
+            <p class="mb-4">
+                Our directory covers all 50 states and the District of Columbia, with services organized by industry categories including:
+            </p>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Healthcare Professionals</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Construction & Trades</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Real Estate</li>
+                        <li><i class="fas fa-check text-success me-2"></i>E-commerce & Online Business</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Transportation</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Food & Hospitality</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Professional Services</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Digital & Creative</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Finance & Investment</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Beauty & Personal Care</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Specialized Industries</li>
+                        <li><i class="fas fa-check text-success me-2"></i>And many more...</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">Why Choose BizLLCFinder?</h3>
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt fa-2x text-primary mb-2"></i>
+                        <h6>Verified Services</h6>
+                        <p class="small">All listed services are verified and reviewed</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary mb-2"></i>
+                        <h6>Nationwide Coverage</h6>
+                        <p class="small">Services available in all 50 states and DC</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                        <h6>Always Available</h6>
+                        <p class="small">24/7 access to our comprehensive directory</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">Our Commitment</h3>
+            <p class="mb-4">
+                We're committed to providing accurate, up-to-date information about LLC formation services. Our team regularly reviews and updates our directory to ensure you have access to the most current and reliable information available.
+            </p>
+            
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle me-2"></i>Disclaimer</h5>
+                <p class="mb-0">
+                    BizLLCFinder is an informational resource. We do not provide legal, tax, or financial advice. Always consult with qualified professionals before making business decisions. Some links may be affiliate links, and we may earn commissions from qualifying purchases.
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 2rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Quick Stats</h4>
+                    <div class="row text-center mb-3">
+                        <div class="col-6">
+                            <h3 class="text-primary">{{ total_businesses }}</h3>
+                            <small>Total Services</small>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="text-primary">51</h3>
+                            <small>States Covered</small>
+                        </div>
+                    </div>
+                    
+                    <h5>Popular Categories</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='doctors') }}" class="text-decoration-none">
+                                <i class="fas fa-user-md me-2 text-primary"></i>Healthcare
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='rental-properties') }}" class="text-decoration-none">
+                                <i class="fas fa-home me-2 text-primary"></i>Real Estate
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='ecommerce') }}" class="text-decoration-none">
+                                <i class="fas fa-shopping-cart me-2 text-primary"></i>E-commerce
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='contractor') }}" class="text-decoration-none">
+                                <i class="fas fa-hammer me-2 text-primary"></i>Construction
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <hr>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

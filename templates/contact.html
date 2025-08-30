@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - BizLLCFinder{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    Contact Us
+                </h1>
+                <p class="lead mb-4">
+                    Have questions about LLC formation services? We're here to help you find the right solutions for your business needs.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-envelope fa-6x text-light opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Content -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2 class="mb-4">Get in Touch</h2>
+            <p class="lead mb-4">
+                We're here to help you navigate the LLC formation process. Whether you have questions about specific services, need guidance on choosing the right provider, or want to learn more about our directory, please reach out to us.
+            </p>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-question-circle fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">General Questions</h5>
+                            <p class="card-text">Get answers about our directory, services, and how to find the right LLC formation provider for your business.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-handshake fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Partnership Inquiries</h5>
+                            <p class="card-text">Interested in partnering with us or having your services listed in our directory? We'd love to hear from you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">How We Can Help</h3>
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-search fa-2x text-primary mb-2"></i>
+                        <h6>Find Services</h6>
+                        <p class="small">Get recommendations for LLC formation services in your state and industry</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-calculator fa-2x text-primary mb-2"></i>
+                        <h6>Cost Guidance</h6>
+                        <p class="small">Learn about formation costs and fees in different states</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="text-center">
+                        <i class="fas fa-file-alt fa-2x text-primary mb-2"></i>
+                        <h6>Process Help</h6>
+                        <p class="small">Get guidance on the LLC formation process and requirements</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle me-2"></i>Response Time</h5>
+                <p class="mb-0">
+                    We typically respond to all inquiries within 24-48 hours during business days. For urgent matters, please include "URGENT" in your message subject.
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 2rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Quick Information</h4>
+                    
+                    <h5>What We Cover</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>All 50 States + DC
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Industry-Specific Services
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Cost Comparisons
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Formation Guidance
+                        </li>
+                    </ul>
+                    
+                    <hr>
+                    
+                    <h5>Popular Topics</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='doctors') }}" class="text-decoration-none">
+                                <i class="fas fa-user-md me-2 text-primary"></i>Healthcare LLCs
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_case_hub', category='rental-properties') }}" class="text-decoration-none">
+                                <i class="fas fa-home me-2 text-primary"></i>Real Estate LLCs
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('tools_calculators', tool_name='llc-cost-calculator') }}" class="text-decoration-none">
+                                <i class="fas fa-calculator me-2 text-primary"></i>Cost Calculator
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('about') }}" class="text-decoration-none">
+                                <i class="fas fa-info-circle me-2 text-primary"></i>About Our Directory
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Send Us a Message</h3>
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScWDu_G3xEWyYXBnADc8XgE3E639UkyLn7dRWyKBE7qu3Y9CQ/viewform?embedded=true" 
+                                frameborder="0" 
+                                marginheight="0" 
+                                marginwidth="0">
+                            Loading…
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

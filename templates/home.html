@@ -1,0 +1,997 @@
+{% extends "base.html" %}
+
+{% block title %}BizLLCFinder - Find LLC Formation Services for All Business Types{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    BizLLCFinder - Complete LLC Formation Directory
+                </h1>
+                <p class="lead mb-4">
+                    Find the best LLC registration and formation services for all business types. 
+                    Professional services tailored to your specific industry needs across all 50 states and DC.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-building fa-6x text-light opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-building fa-3x mb-3"></i>
+                <h3>{{ total_businesses }}</h3>
+                <p class="mb-0">Total Businesses</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-map-marker-alt fa-3x mb-3"></i>
+                <h3>{{ states_count }}</h3>
+                <p class="mb-0">States Covered</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-star fa-3x mb-3"></i>
+                <h3>4.5+</h3>
+                <p class="mb-0">Average Rating</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="container mb-5">
+    <div class="search-box">
+        <h3 class="text-center mb-4">Find LLC Formation Services for Your Business</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="stateSelect" class="form-label">State</label>
+                <select class="form-select" id="stateSelect">
+                    <option value="">All States</option>
+                                         {% for state in states %}
+                     <option value="{{ state }}">{{ get_state_full_name(state) }}</option>
+                     {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="categorySelect" class="form-label">LLC Service Type</label>
+                <select class="form-select" id="categorySelect">
+                    <option value="">All LLC Services</option>
+                    <option value="doctors">LLC for Doctors</option>
+                    <option value="rental-properties">LLC for Rental Properties</option>
+                    <option value="vending-machines">LLC for Vending Machines</option>
+                    <option value="realtors">LLC for Realtors</option>
+                    <option value="small-business">LLC for Small Business</option>
+                    <option value="airbnb">LLC for Airbnb</option>
+                    <option value="trucking">LLC for Trucking</option>
+                    <option value="cannabis">LLC for Cannabis</option>
+                    <option value="hair-salon">LLC for Hair Salon</option>
+                    <option value="etsy">LLC for Etsy</option>
+                    <option value="amazon-fba">LLC for Amazon FBA</option>
+                    <option value="bakery">LLC for Bakery</option>
+                    <option value="investment-property">LLC for Investment Property</option>
+                    <option value="clothing-brand">LLC for Clothing Brand</option>
+                    <option value="dropshipping">LLC for Dropshipping</option>
+                    <option value="contractor">LLC for Contractor</option>
+                    <option value="roofers">LLC for Roofers</option>
+                    <option value="ecommerce">LLC for Ecommerce</option>
+                    <option value="photographer">LLC for Photographer</option>
+                    <option value="shopify">LLC for Shopify</option>
+                    <option value="handyman">LLC for Handyman</option>
+                    <option value="uber">LLC for Uber</option>
+                    <option value="lyft">LLC for Lyft</option>
+                    <option value="limo">LLC for Limo</option>
+                    <option value="handymen">LLC for Handymen</option>
+                    <option value="electricians">LLC for Electricians</option>
+                    <option value="plumbers">LLC for Plumbers</option>
+                    <option value="landscapers">LLC for Landscapers</option>
+                    <option value="cleaning-businesses">LLC for Cleaning Businesses</option>
+                    <option value="painters">LLC for Painters</option>
+                    <option value="hvac-technicians">LLC for HVAC Technicians</option>
+                    <option value="dentists">LLC for Dentists</option>
+                    <option value="chiropractors">LLC for Chiropractors</option>
+                    <option value="therapists">LLC for Therapists</option>
+                    <option value="nutritionists">LLC for Nutritionists</option>
+                    <option value="personal-trainers">LLC for Personal Trainers</option>
+                    <option value="landlords">LLC for Landlords</option>
+                    <option value="airbnb-hosts">LLC for Airbnb Hosts</option>
+                    <option value="real-estate-agents">LLC for Real Estate Agents</option>
+                    <option value="property-management">LLC for Property Management</option>
+                    <option value="house-flippers">LLC for House Flippers</option>
+                    <option value="e-commerce">LLC for E-commerce</option>
+                    <option value="freelancers">LLC for Freelancers</option>
+                    <option value="consultants">LLC for Consultants</option>
+                    <option value="social-media-influencers">LLC for Social Media Influencers</option>
+                    <option value="online-coaches">LLC for Online Coaches</option>
+                    <option value="content-creators">LLC for Content Creators</option>
+                    <option value="stock-trading">LLC for Stock Trading</option>
+                    <option value="day-trading">LLC for Day Trading</option>
+                    <option value="crypto-trading">LLC for Crypto Trading</option>
+                    <option value="financial-advisors">LLC for Financial Advisors</option>
+                    <option value="rideshare-drivers">LLC for Rideshare Drivers</option>
+                    <option value="restaurants">LLC for Restaurants</option>
+                    <option value="food-trucks">LLC for Food Trucks</option>
+                    <option value="salons">LLC for Salons</option>
+                    <option value="barbers">LLC for Barbers</option>
+                    <option value="event-planners">LLC for Event Planners</option>
+                    <option value="drywall-installers">LLC for Drywall Installers</option>
+                    <option value="window-installers">LLC for Window Installers</option>
+                    <option value="insulation-companies">LLC for Insulation Companies</option>
+                    <option value="solar-panel-installers">LLC for Solar Panel Installers</option>
+                    <option value="fencing-companies">LLC for Fencing Companies</option>
+                    <option value="videographers">LLC for Videographers</option>
+                    <option value="podcasters">LLC for Podcasters</option>
+                    <option value="marketing-agencies">LLC for Marketing Agencies</option>
+                    <option value="seo-consultants">LLC for SEO Consultants</option>
+                    <option value="pr-firms">LLC for PR Firms</option>
+                    <option value="it-consultants">LLC for IT Consultants</option>
+                    <option value="software-developers">LLC for Software Developers</option>
+                    <option value="cybersecurity-firms">LLC for Cybersecurity Firms</option>
+                    <option value="msps">LLC for MSPs</option>
+                    <option value="saas-businesses">LLC for SaaS Businesses</option>
+                    <option value="woodworking-businesses">LLC for Woodworking Businesses</option>
+                    <option value="jewelry-makers">LLC for Jewelry Makers</option>
+                    <option value="candle-makers">LLC for Candle Makers</option>
+                    <option value="soap-makers">LLC for Soap Makers</option>
+                    <option value="farmers">LLC for Farmers</option>
+                    <option value="ranchers">LLC for Ranchers</option>
+                    <option value="beekeepers">LLC for Beekeepers</option>
+                    <option value="greenhouse-businesses">LLC for Greenhouse Businesses</option>
+                    <option value="landscaping-supply-companies">LLC for Landscaping Supply Companies</option>
+                    <option value="driving-schools">LLC for Driving Schools</option>
+                    <option value="test-prep-tutors">LLC for Test Prep Tutors</option>
+                    <option value="language-instructors">LLC for Language Instructors</option>
+                    <option value="career-coaches">LLC for Career Coaches</option>
+                    <option value="corporate-trainers">LLC for Corporate Trainers</option>
+                    <option value="charter-bus-companies">LLC for Charter Bus Companies</option>
+                    <option value="boat-rental-businesses">LLC for Boat Rental Businesses</option>
+                    <option value="trucking-dispatchers">LLC for Trucking Dispatchers</option>
+                    <option value="tour-guides">LLC for Tour Guides</option>
+                    <option value="llc-registration">General LLC Registration</option>
+                    <option value="accounting">Accounting Services</option>
+                    <option value="legal">Legal Services</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn btn-primary w-100" onclick="searchBusinesses()">
+                    <i class="fas fa-search me-2"></i>Search
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- LLC Registration Services -->
+    <section class="container mb-5">
+        <h2 class="text-center mb-4">LLC Formation Services for All Business Types</h2>
+        
+        <!-- Healthcare Professionals -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-heartbeat me-2"></i>Healthcare Professionals</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Doctors</h5>
+                        <p class="card-text">Professional LLC formation and business services specifically for medical professionals and healthcare practices.</p>
+                        <a href="{{ url_for('use_case_hub', category='doctors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-tooth fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Dentists</h5>
+                        <p class="card-text">LLC formation and business services for dentists, dental practices, and oral healthcare professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='dentists') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-spine fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Chiropractors</h5>
+                        <p class="card-text">LLC formation and business services for chiropractors, chiropractic clinics, and spinal health professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='chiropractors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Construction & Trades -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-hammer me-2"></i>Construction & Trades</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Electricians</h5>
+                        <p class="card-text">LLC formation and business services for electricians, electrical contractors, and electrical service businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='electricians') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-faucet fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Plumbers</h5>
+                        <p class="card-text">LLC formation and business services for plumbers, plumbing contractors, and plumbing service businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='plumbers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-tree fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Landscapers</h5>
+                        <p class="card-text">LLC formation and business services for landscapers, landscaping companies, and outdoor service businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='landscapers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-tools fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Drywall Installers</h5>
+                        <p class="card-text">LLC formation and business services for drywall installers, construction contractors, and interior finishing specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='drywall-installers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-window-maximize fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Window Installers</h5>
+                        <p class="card-text">LLC formation and business services for window installers, glazing contractors, and home improvement specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='window-installers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-thermometer-half fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Insulation Companies</h5>
+                        <p class="card-text">LLC formation and business services for insulation companies, energy efficiency contractors, and building envelope specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='insulation-companies') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-solar-panel fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Solar Panel Installers</h5>
+                        <p class="card-text">LLC formation and business services for solar panel installers, renewable energy contractors, and green technology specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='solar-panel-installers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-border-all fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Fencing Companies</h5>
+                        <p class="card-text">LLC formation and business services for fencing companies, outdoor construction contractors, and property enclosure specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='fencing-companies') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real Estate -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-home me-2"></i>Real Estate</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-home fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Rental Properties</h5>
+                        <p class="card-text">LLC formation and property management services for real estate investors and landlords.</p>
+                        <a href="{{ url_for('use_case_hub', category='rental-properties') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-key fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Landlords</h5>
+                        <p class="card-text">LLC formation and business services for landlords, property owners, and rental property management.</p>
+                        <a href="{{ url_for('use_case_hub', category='landlords') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bed fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Airbnb Hosts</h5>
+                        <p class="card-text">LLC formation and business services for Airbnb hosts, vacation rental owners, and short-term rental businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='airbnb-hosts') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- E-commerce & Online Business -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-shopping-cart me-2"></i>E-commerce & Online Business</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for E-commerce</h5>
+                        <p class="card-text">LLC formation and business services for e-commerce businesses, online retailers, and digital commerce operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='e-commerce') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-bag fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Etsy</h5>
+                        <p class="card-text">LLC formation and business services for Etsy sellers, online craft businesses, and ecommerce entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='etsy') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-box fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Amazon FBA</h5>
+                        <p class="card-text">LLC formation and business services for Amazon FBA sellers, fulfillment businesses, and ecommerce operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='amazon-fba') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transportation -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-car me-2"></i>Transportation</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Trucking</h5>
+                        <p class="card-text">LLC formation and business services for trucking companies, transportation businesses, and logistics operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='trucking') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Uber</h5>
+                        <p class="card-text">LLC formation and business services for Uber drivers, ride-sharing entrepreneurs, and transportation businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='uber') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-car-side fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Lyft</h5>
+                        <p class="card-text">LLC formation and business services for Lyft drivers, ride-sharing entrepreneurs, and transportation businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='lyft') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bus fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Charter Bus Companies</h5>
+                        <p class="card-text">LLC formation and business services for charter bus companies, group transportation services, and passenger transport businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='charter-bus-companies') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-ship fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Boat Rental Businesses</h5>
+                        <p class="card-text">LLC formation and business services for boat rental businesses, marine recreation services, and watercraft rental operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='boat-rental-businesses') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-route fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Trucking Dispatchers</h5>
+                        <p class="card-text">LLC formation and business services for trucking dispatchers, logistics coordinators, and transportation management specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='trucking-dispatchers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-map-marked-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Tour Guides</h5>
+                        <p class="card-text">LLC formation and business services for tour guides, travel services, and tourism experience providers.</p>
+                        <a href="{{ url_for('use_case_hub', category='tour-guides') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Food & Hospitality -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-utensils me-2"></i>Food & Hospitality</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-utensils fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Restaurants</h5>
+                        <p class="card-text">LLC formation and business services for restaurants, food service businesses, and culinary establishments.</p>
+                        <a href="{{ url_for('use_case_hub', category='restaurants') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Food Trucks</h5>
+                        <p class="card-text">LLC formation and business services for food trucks, mobile food vendors, and street food businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='food-trucks') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-birthday-cake fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Bakery</h5>
+                        <p class="card-text">LLC formation and business services for bakeries, food service businesses, and culinary entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='bakery') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance & Investment -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-chart-line me-2"></i>Finance & Investment</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Stock Trading</h5>
+                        <p class="card-text">LLC formation and business services for stock traders, investment professionals, and securities trading businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='stock-trading') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-coins fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Crypto Trading</h5>
+                        <p class="card-text">LLC formation and business services for cryptocurrency traders, blockchain businesses, and digital asset trading.</p>
+                        <a href="{{ url_for('use_case_hub', category='crypto-trading') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-user-tie fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Financial Advisors</h5>
+                        <p class="card-text">LLC formation and business services for financial advisors, wealth managers, and investment consultants.</p>
+                        <a href="{{ url_for('use_case_hub', category='financial-advisors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Services -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-briefcase me-2"></i>Professional Services</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-laptop fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Freelancers</h5>
+                        <p class="card-text">LLC formation and business services for freelancers, independent contractors, and self-employed professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='freelancers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-user-tie fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Consultants</h5>
+                        <p class="card-text">LLC formation and business services for consultants, consulting firms, and professional advisory businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='consultants') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-camera fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Photographers</h5>
+                        <p class="card-text">LLC formation and business services for photographers, photography studios, and creative professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='photographer') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bullhorn fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Marketing Agencies</h5>
+                        <p class="card-text">LLC formation and business services for marketing agencies, advertising firms, and brand management companies.</p>
+                        <a href="{{ url_for('use_case_hub', category='marketing-agencies') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for SEO Consultants</h5>
+                        <p class="card-text">LLC formation and business services for SEO consultants, digital marketing specialists, and search engine optimization experts.</p>
+                        <a href="{{ url_for('use_case_hub', category='seo-consultants') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-newspaper fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for PR Firms</h5>
+                        <p class="card-text">LLC formation and business services for PR firms, public relations agencies, and communications consultants.</p>
+                        <a href="{{ url_for('use_case_hub', category='pr-firms') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-desktop fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for IT Consultants</h5>
+                        <p class="card-text">LLC formation and business services for IT consultants, technology advisors, and information systems specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='it-consultants') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-code fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Software Developers</h5>
+                        <p class="card-text">LLC formation and business services for software developers, programming consultants, and technology entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='software-developers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Cybersecurity Firms</h5>
+                        <p class="card-text">LLC formation and business services for cybersecurity firms, information security consultants, and digital protection specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='cybersecurity-firms') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-server fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for MSPs</h5>
+                        <p class="card-text">LLC formation and business services for managed service providers, IT support companies, and technology management firms.</p>
+                        <a href="{{ url_for('use_case_hub', category='msps') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-cloud fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for SaaS Businesses</h5>
+                        <p class="card-text">LLC formation and business services for SaaS businesses, software-as-a-service companies, and subscription-based technology firms.</p>
+                        <a href="{{ url_for('use_case_hub', category='saas-businesses') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Driving Schools</h5>
+                        <p class="card-text">LLC formation and business services for driving schools, driver education programs, and transportation training businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='driving-schools') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Test Prep Tutors</h5>
+                        <p class="card-text">LLC formation and business services for test prep tutors, educational consultants, and academic preparation specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='test-prep-tutors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-language fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Language Instructors</h5>
+                        <p class="card-text">LLC formation and business services for language instructors, foreign language teachers, and linguistic education specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='language-instructors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Career Coaches</h5>
+                        <p class="card-text">LLC formation and business services for career coaches, professional development consultants, and job search specialists.</p>
+                        <a href="{{ url_for('use_case_hub', category='career-coaches') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chalkboard-teacher fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Corporate Trainers</h5>
+                        <p class="card-text">LLC formation and business services for corporate trainers, workplace education specialists, and professional development consultants.</p>
+                        <a href="{{ url_for('use_case_hub', category='corporate-trainers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Digital & Creative -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-mobile-alt me-2"></i>Digital & Creative</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-share-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Social Media Influencers</h5>
+                        <p class="card-text">LLC formation and business services for social media influencers, content creators, and digital marketing professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='social-media-influencers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-video fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Content Creators</h5>
+                        <p class="card-text">LLC formation and business services for content creators, digital media professionals, and creative entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='content-creators') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Online Coaches</h5>
+                        <p class="card-text">LLC formation and business services for online coaches, life coaches, and professional development consultants.</p>
+                        <a href="{{ url_for('use_case_hub', category='online-coaches') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-video-camera fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Videographers</h5>
+                        <p class="card-text">LLC formation and business services for videographers, video production companies, and multimedia professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='videographers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-microphone fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Podcasters</h5>
+                        <p class="card-text">LLC formation and business services for podcasters, audio content creators, and digital media entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='podcasters') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specialized & Artisanal -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-star me-2"></i>Specialized & Artisanal</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-hammer fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Woodworking Businesses</h5>
+                        <p class="card-text">LLC formation and business services for woodworking businesses, custom furniture makers, and artisanal craftsmen.</p>
+                        <a href="{{ url_for('use_case_hub', category='woodworking-businesses') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-gem fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Jewelry Makers</h5>
+                        <p class="card-text">LLC formation and business services for jewelry makers, custom jewelry designers, and precious metal artisans.</p>
+                        <a href="{{ url_for('use_case_hub', category='jewelry-makers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-fire fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Candle Makers</h5>
+                        <p class="card-text">LLC formation and business services for candle makers, artisanal product manufacturers, and home goods entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='candle-makers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bubbles fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Soap Makers</h5>
+                        <p class="card-text">LLC formation and business services for soap makers, natural product manufacturers, and personal care artisans.</p>
+                        <a href="{{ url_for('use_case_hub', category='soap-makers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-seedling fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Farmers</h5>
+                        <p class="card-text">LLC formation and business services for farmers, agricultural businesses, and crop production operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='farmers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-horse fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Ranchers</h5>
+                        <p class="card-text">LLC formation and business services for ranchers, livestock operations, and animal husbandry businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='ranchers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bee fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Beekeepers</h5>
+                        <p class="card-text">LLC formation and business services for beekeepers, honey producers, and apiary management businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='beekeepers') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-warehouse fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Greenhouse Businesses</h5>
+                        <p class="card-text">LLC formation and business services for greenhouse businesses, controlled environment agriculture, and specialty crop production.</p>
+                        <a href="{{ url_for('use_case_hub', category='greenhouse-businesses') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-store fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Landscaping Supply Companies</h5>
+                        <p class="card-text">LLC formation and business services for landscaping supply companies, garden centers, and outdoor material suppliers.</p>
+                        <a href="{{ url_for('use_case_hub', category='landscaping-supply-companies') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Services -->
+        <h3 class="mb-3 text-primary"><i class="fas fa-plus-circle me-2"></i>Additional Services</h3>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Vending Machines</h5>
+                        <p class="card-text">LLC formation and business services for vending machine operators and automated retail businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='vending-machines') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Cannabis</h5>
+                        <p class="card-text">LLC formation and specialized business services for cannabis dispensaries, marijuana businesses, and cannabis-related operations.</p>
+                        <a href="{{ url_for('use_case_hub', category='cannabis') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-cut fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Hair Salon</h5>
+                        <p class="card-text">LLC formation and business services for hair salons, beauty salons, and cosmetology businesses.</p>
+                        <a href="{{ url_for('use_case_hub', category='hair-salon') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-tshirt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Clothing Brand</h5>
+                        <p class="card-text">LLC formation and business services for clothing brands, fashion businesses, and apparel companies.</p>
+                        <a href="{{ url_for('use_case_hub', category='clothing-brand') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Dropshipping</h5>
+                        <p class="card-text">LLC formation and business services for dropshipping businesses, ecommerce entrepreneurs, and online retailers.</p>
+                        <a href="{{ url_for('use_case_hub', category='dropshipping') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Investment Property</h5>
+                        <p class="card-text">LLC formation and business services for real estate investors, property management companies, and investment portfolios.</p>
+                        <a href="{{ url_for('use_case_hub', category='investment-property') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-store fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Small Business</h5>
+                        <p class="card-text">LLC formation and comprehensive business services for small business owners and entrepreneurs.</p>
+                        <a href="{{ url_for('use_case_hub', category='small-business') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-key fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">LLC for Realtors</h5>
+                        <p class="card-text">LLC formation and business services for real estate agents, brokers, and real estate professionals.</p>
+                        <a href="{{ url_for('use_case_hub', category='realtors') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">General LLC Registration</h5>
+                        <p class="card-text">Complete LLC formation and business registration services for all business types.</p>
+                        <a href="{{ url_for('use_case_hub', category='llc-registration') }}" class="btn btn-outline-primary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All Categories -->
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-primary btn-lg" onclick="showAllCategories()">
+                <i class="fas fa-th-large me-2"></i>View All Categories
+            </a>
+        </div>
+    </section>
+
+<!-- Top Rated Businesses -->
+<section class="container mb-5">
+    <h2 class="text-center mb-4">Top Rated Businesses</h2>
+    <div class="row" id="topRatedBusinesses">
+        {% for business in top_rated %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card business-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ business.name }}</h5>
+                    <div class="mb-2">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ business.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ business.reviews }} reviews)</span>
+                    </div>
+                    <p class="location-info">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {{ business.city }}, {{ business.state }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+    <!-- Call to Action -->
+    <section class="container mb-5">
+        <div class="card bg-primary text-white text-center">
+            <div class="card-body py-5">
+                <h3 class="card-title">Ready to Form Your LLC?</h3>
+                <p class="card-text">Find the best LLC registration services for your specific business needs.</p>
+                <a href="{{ url_for('use_case_hub', category='doctors') }}" class="btn btn-light btn-lg">
+                    Start LLC Formation Today
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function searchBusinesses() {
+    const state = document.getElementById('stateSelect').value;
+    const category = document.getElementById('categorySelect').value;
+    
+    let url = '/api/businesses?';
+    if (state) url += `state=${encodeURIComponent(state)}&`;
+    if (category) url += `category=${encodeURIComponent(category)}&`;
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Handle search results
+            console.log('Search results:', data);
+            // You can implement a modal or redirect to results page
+            alert(`Found ${data.length} businesses matching your criteria.`);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error searching businesses. Please try again.');
+        });
+}
+</script>
+{% endblock %}

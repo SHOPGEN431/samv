@@ -1,0 +1,506 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tool_name|replace('-', ' ')|title }} - LLC Directory Tools{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Tools</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">{{ tool_name|replace('-', ' ')|title }}</h1>
+            <p class="lead mb-4">
+                Use our interactive tools and calculators to estimate costs, compare services, 
+                and make informed decisions for your LLC.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Tool Content -->
+<section class="container mb-5">
+    {% if tool_name == 'llc-cost-by-state' %}
+    <!-- LLC Cost by State Calculator -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-calculator me-2"></i>LLC Cost Calculator by State</h4>
+                </div>
+                <div class="card-body">
+                    <form id="costCalculator">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">State</label>
+                                <select class="form-select" id="stateSelect" required>
+                                    <option value="">Select State</option>
+                                    <option value="alabama">Alabama</option>
+                                    <option value="alaska">Alaska</option>
+                                    <option value="arizona">Arizona</option>
+                                    <option value="arkansas">Arkansas</option>
+                                    <option value="california">California</option>
+                                    <option value="colorado">Colorado</option>
+                                    <option value="connecticut">Connecticut</option>
+                                    <option value="delaware">Delaware</option>
+                                    <option value="florida">Florida</option>
+                                    <option value="georgia">Georgia</option>
+                                    <option value="hawaii">Hawaii</option>
+                                    <option value="idaho">Idaho</option>
+                                    <option value="illinois">Illinois</option>
+                                    <option value="indiana">Indiana</option>
+                                    <option value="iowa">Iowa</option>
+                                    <option value="kansas">Kansas</option>
+                                    <option value="kentucky">Kentucky</option>
+                                    <option value="louisiana">Louisiana</option>
+                                    <option value="maine">Maine</option>
+                                    <option value="maryland">Maryland</option>
+                                    <option value="massachusetts">Massachusetts</option>
+                                    <option value="michigan">Michigan</option>
+                                    <option value="minnesota">Minnesota</option>
+                                    <option value="mississippi">Mississippi</option>
+                                    <option value="missouri">Missouri</option>
+                                    <option value="montana">Montana</option>
+                                    <option value="nebraska">Nebraska</option>
+                                    <option value="nevada">Nevada</option>
+                                    <option value="new-hampshire">New Hampshire</option>
+                                    <option value="new-jersey">New Jersey</option>
+                                    <option value="new-mexico">New Mexico</option>
+                                    <option value="new-york">New York</option>
+                                    <option value="north-carolina">North Carolina</option>
+                                    <option value="north-dakota">North Dakota</option>
+                                    <option value="ohio">Ohio</option>
+                                    <option value="oklahoma">Oklahoma</option>
+                                    <option value="oregon">Oregon</option>
+                                    <option value="pennsylvania">Pennsylvania</option>
+                                    <option value="rhode-island">Rhode Island</option>
+                                    <option value="south-carolina">South Carolina</option>
+                                    <option value="south-dakota">South Dakota</option>
+                                    <option value="tennessee">Tennessee</option>
+                                    <option value="texas">Texas</option>
+                                    <option value="utah">Utah</option>
+                                    <option value="vermont">Vermont</option>
+                                    <option value="virginia">Virginia</option>
+                                    <option value="washington">Washington</option>
+                                    <option value="west-virginia">West Virginia</option>
+                                    <option value="wisconsin">Wisconsin</option>
+                                    <option value="wyoming">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Business Type</label>
+                                <select class="form-select" id="businessType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="single-member">Single Member LLC</option>
+                                    <option value="multi-member">Multi-Member LLC</option>
+                                    <option value="professional">Professional LLC</option>
+                                    <option value="series">Series LLC</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Service Level</label>
+                                <select class="form-select" id="serviceLevel" required>
+                                    <option value="">Select Level</option>
+                                    <option value="basic">Basic Filing Only</option>
+                                    <option value="standard">Standard Package</option>
+                                    <option value="premium">Premium Package</option>
+                                    <option value="complete">Complete Service</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Additional Services</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="ein">
+                                    <label class="form-check-label" for="ein">EIN Application</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="operating">
+                                    <label class="form-check-label" for="operating">Operating Agreement</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="banking">
+                                    <label class="form-check-label" for="banking">Banking Resolution</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="calculateLLCCost()">
+                            <i class="fas fa-calculator me-2"></i>Calculate Cost
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Cost Breakdown</h5>
+                </div>
+                <div class="card-body" id="costBreakdown">
+                    <p class="text-muted">Select options above to see cost breakdown.</p>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>What's Included</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>State Filing Fees</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Document Preparation</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Filing Service</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Compliance Alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% elif tool_name == 'foreign-qualification-cost' %}
+    <!-- Foreign Qualification Cost Calculator -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-globe me-2"></i>Foreign Qualification Cost Calculator</h4>
+                </div>
+                <div class="card-body">
+                    <form id="foreignQualificationCalculator">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Home State</label>
+                                <select class="form-select" id="homeState" required>
+                                    <option value="">Select Home State</option>
+                                    <option value="delaware">Delaware</option>
+                                    <option value="nevada">Nevada</option>
+                                    <option value="wyoming">Wyoming</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Target State</label>
+                                <select class="form-select" id="targetState" required>
+                                    <option value="">Select Target State</option>
+                                    <option value="california">California</option>
+                                    <option value="new-york">New York</option>
+                                    <option value="texas">Texas</option>
+                                    <option value="florida">Florida</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Business Type</label>
+                                <select class="form-select" id="businessType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="llc">LLC</option>
+                                    <option value="corporation">Corporation</option>
+                                    <option value="partnership">Partnership</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Service Level</label>
+                                <select class="form-select" id="serviceLevel" required>
+                                    <option value="">Select Level</option>
+                                    <option value="basic">Basic Filing</option>
+                                    <option value="standard">Standard Service</option>
+                                    <option value="premium">Premium Service</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="calculateForeignQualification()">
+                            <i class="fas fa-calculator me-2"></i>Calculate Cost
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Cost Breakdown</h5>
+                </div>
+                <div class="card-body" id="foreignCostBreakdown">
+                    <p class="text-muted">Select options above to see cost breakdown.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% elif tool_name == 'llc-vs-s-corp-tax-savings' %}
+    <!-- LLC vs S-Corp Tax Savings Calculator -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-balance-scale me-2"></i>LLC vs S-Corp Tax Savings Calculator</h4>
+                </div>
+                <div class="card-body">
+                    <form id="taxSavingsCalculator">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Annual Business Income</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="annualIncome" placeholder="100000" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">State</label>
+                                <select class="form-select" id="stateSelect" required>
+                                    <option value="">Select State</option>
+                                    <option value="california">California</option>
+                                    <option value="new-york">New York</option>
+                                    <option value="texas">Texas</option>
+                                    <option value="florida">Florida</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Business Expenses</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="expenses" placeholder="20000">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Owner's Salary (S-Corp)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="salary" placeholder="50000">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="calculateTaxSavings()">
+                            <i class="fas fa-calculator me-2"></i>Calculate Tax Savings
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Tax Comparison</h5>
+                </div>
+                <div class="card-body" id="taxComparison">
+                    <p class="text-muted">Enter income details to see tax comparison.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <!-- Default Tool Page -->
+    <div class="text-center py-5">
+        <i class="fas fa-tools fa-3x text-muted mb-3"></i>
+        <h3>Tool Not Found</h3>
+        <p class="text-muted">The requested tool is not available.</p>
+        <a href="{{ url_for('tools_calculators', tool_name='llc-cost-by-state') }}" class="btn btn-primary">
+            Try LLC Cost Calculator
+        </a>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Other Tools -->
+<section class="container mb-5">
+    <h3 class="mb-4">Other Tools & Calculators</h3>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('tools_calculators', tool_name='llc-cost-by-state') }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-calculator me-2"></i>LLC Cost by State
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('tools_calculators', tool_name='foreign-qualification-cost') }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-globe me-2"></i>Foreign Qualification Cost
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('tools_calculators', tool_name='llc-vs-s-corp-tax-savings') }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-balance-scale me-2"></i>LLC vs S-Corp Tax Savings
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// State cost data (simplified)
+const stateCosts = {
+    'california': { filing: 70, annual: 800, service: 150 },
+    'new-york': { filing: 200, annual: 9, service: 200 },
+    'texas': { filing: 300, annual: 0, service: 100 },
+    'florida': { filing: 125, annual: 138.75, service: 150 },
+    'delaware': { filing: 90, annual: 300, service: 100 },
+    'nevada': { filing: 75, annual: 350, service: 100 },
+    'wyoming': { filing: 100, annual: 50, service: 100 }
+};
+
+function calculateLLCCost() {
+    const state = document.getElementById('stateSelect').value;
+    const businessType = document.getElementById('businessType').value;
+    const serviceLevel = document.getElementById('serviceLevel').value;
+    const ein = document.getElementById('ein').checked;
+    const operating = document.getElementById('operating').checked;
+    const banking = document.getElementById('banking').checked;
+    
+    if (!state || !businessType || !serviceLevel) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    let totalCost = 0;
+    let breakdown = [];
+    
+    // Base filing cost
+    const baseCost = stateCosts[state] ? stateCosts[state].filing : 100;
+    totalCost += baseCost;
+    breakdown.push(`State Filing Fee: $${baseCost}`);
+    
+    // Service level costs
+    let serviceCost = 0;
+    switch(serviceLevel) {
+        case 'basic': serviceCost = 50; break;
+        case 'standard': serviceCost = 150; break;
+        case 'premium': serviceCost = 300; break;
+        case 'complete': serviceCost = 500; break;
+    }
+    totalCost += serviceCost;
+    breakdown.push(`Service Fee: $${serviceCost}`);
+    
+    // Additional services
+    if (ein) {
+        totalCost += 50;
+        breakdown.push('EIN Application: $50');
+    }
+    if (operating) {
+        totalCost += 100;
+        breakdown.push('Operating Agreement: $100');
+    }
+    if (banking) {
+        totalCost += 75;
+        breakdown.push('Banking Resolution: $75');
+    }
+    
+    // Display results
+    const breakdownHtml = breakdown.map(item => `<li>${item}</li>`).join('');
+    document.getElementById('costBreakdown').innerHTML = `
+        <div class="alert alert-success">
+            <h6>Total Estimated Cost: $${totalCost.toLocaleString()}</h6>
+        </div>
+        <ul class="list-unstyled">
+            ${breakdownHtml}
+        </ul>
+    `;
+}
+
+function calculateForeignQualification() {
+    const homeState = document.getElementById('homeState').value;
+    const targetState = document.getElementById('targetState').value;
+    const businessType = document.getElementById('businessType').value;
+    const serviceLevel = document.getElementById('serviceLevel').value;
+    
+    if (!homeState || !targetState || !businessType || !serviceLevel) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    let totalCost = 0;
+    let breakdown = [];
+    
+    // Base qualification cost
+    const baseCost = 200;
+    totalCost += baseCost;
+    breakdown.push(`Foreign Qualification Fee: $${baseCost}`);
+    
+    // Service level costs
+    let serviceCost = 0;
+    switch(serviceLevel) {
+        case 'basic': serviceCost = 100; break;
+        case 'standard': serviceCost = 250; break;
+        case 'premium': serviceCost = 400; break;
+    }
+    totalCost += serviceCost;
+    breakdown.push(`Service Fee: $${serviceCost}`);
+    
+    // Display results
+    const breakdownHtml = breakdown.map(item => `<li>${item}</li>`).join('');
+    document.getElementById('foreignCostBreakdown').innerHTML = `
+        <div class="alert alert-success">
+            <h6>Total Estimated Cost: $${totalCost.toLocaleString()}</h6>
+        </div>
+        <ul class="list-unstyled">
+            ${breakdownHtml}
+        </ul>
+    `;
+}
+
+function calculateTaxSavings() {
+    const income = parseFloat(document.getElementById('annualIncome').value) || 0;
+    const state = document.getElementById('stateSelect').value;
+    const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+    const salary = parseFloat(document.getElementById('salary').value) || 50000;
+    
+    if (!income || !state) {
+        alert('Please fill in income and state.');
+        return;
+    }
+    
+    const netIncome = income - expenses;
+    
+    // LLC Tax Calculation (simplified)
+    const llcSelfEmploymentTax = netIncome * 0.153; // 15.3% SE tax
+    const llcIncomeTax = netIncome * 0.24; // 24% federal income tax
+    const llcTotalTax = llcSelfEmploymentTax + llcIncomeTax;
+    
+    // S-Corp Tax Calculation (simplified)
+    const scorpSalaryTax = salary * 0.153; // 15.3% payroll tax
+    const scorpIncomeTax = (netIncome - salary) * 0.24; // 24% federal income tax
+    const scorpTotalTax = scorpSalaryTax + scorpIncomeTax;
+    
+    const taxSavings = llcTotalTax - scorpTotalTax;
+    
+    document.getElementById('taxComparison').innerHTML = `
+        <div class="row">
+            <div class="col-6">
+                <h6>LLC Total Tax</h6>
+                <p class="text-danger">$${llcTotalTax.toLocaleString()}</p>
+            </div>
+            <div class="col-6">
+                <h6>S-Corp Total Tax</h6>
+                <p class="text-success">$${scorpTotalTax.toLocaleString()}</p>
+            </div>
+        </div>
+        <div class="alert alert-info">
+            <strong>Potential Annual Savings:</strong> $${taxSavings.toLocaleString()}
+        </div>
+    `;
+}
+</script>
+{% endblock %}
+

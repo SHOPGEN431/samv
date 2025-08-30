@@ -1,0 +1,647 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category_info.title|default(category|title + ' Services') }} in {{ state_full_name }} - LLC Directory{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('use_case_hub', category=category) }}">{{ category_info.title|default('LLC Services for ' + category|title) }}</a></li>
+            <li class="breadcrumb-item active">{{ state_full_name }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">{{ category_info.title|default(category|title + ' Services') }} in {{ state_full_name }}</h1>
+            <p class="lead mb-4">
+                {{ category_info.description|default('Find the best ' + category|lower + ' services and professionals in ' + state_full_name + '. Browse top-rated businesses across all cities in this state.') }}
+            </p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="stats-card">
+                <h4>{{ businesses|length }}</h4>
+                <p class="mb-0">Businesses in {{ state }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Top 3 LLC Services Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            
+
+            
+            <!-- Disclaimers -->
+            <div class="alert alert-info mb-4">
+                <h6><i class="fas fa-info-circle me-2"></i>Important Disclaimers:</h6>
+                <ul class="mb-2 small">
+                    <li><strong>Pricing & Services:</strong> All pricing and service information should be verified directly with the LLC provider for the most current and accurate details.</li>
+                    <li><strong>Affiliate Disclosure:</strong> We may earn commissions from affiliate links on this page. This helps support our free content and research.</li>
+                    <li><strong>AI-Generated Content:</strong> This content was written with AI assistance. Please verify all information for accuracy before making business decisions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for service_key, service in top_llc_services.items() %}
+        <div class="col-lg-4 mb-4">
+            {% if service_key == 'northwest_registered_agent' %}
+            <div class="card h-100 border-primary northwest-featured">
+            {% else %}
+            <div class="card h-100 border-primary">
+            {% endif %}
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-star text-warning me-2"></i>
+                            {{ service.name }}
+                        </h5>
+                        {% if service.popularity %}
+                        {% if service_key == 'northwest_registered_agent' %}
+                        <span class="badge bg-danger text-white">
+                            <i class="fas fa-fire me-1"></i>
+                            {{ service.popularity }}
+                        </span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">
+                            <i class="fas fa-crown me-1"></i>
+                            {{ service.popularity }}
+                        </span>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ service.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ service.reviews }} reviews)</span>
+                    </div>
+                    
+                    {% if service.description %}
+                    <div class="mb-3">
+                        <p class="text-muted small">{{ service.description }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if service.formation_packages %}
+                        <!-- ZenBusiness with multiple packages -->
+                        <h6 class="text-primary mb-3">Formation Packages:</h6>
+                        {% for package_key, package in service.formation_packages.items() %}
+                        <div class="mb-2">
+                            <strong>{{ package.name }}:</strong> {{ package.cost }}
+                            <br><small class="text-muted">{{ package.description }}</small>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Other services with single pricing -->
+                        <h6 class="text-primary mb-2">Formation Cost:</h6>
+                        <p class="mb-2"><strong>{{ service.formation_cost }}</strong></p>
+                        <p class="text-muted small mb-3">{{ service.formation_includes }}</p>
+                    {% endif %}
+                    
+                    <h6 class="text-primary mb-2">Registered Agent Renewal:</h6>
+                    <p class="mb-2"><strong>{{ service.renewal_cost }}</strong></p>
+                    <p class="text-muted small mb-3">{{ service.renewal_note }}</p>
+                    
+                    <div class="bg-light p-3 rounded mb-3">
+                        <h6 class="text-success mb-2">
+                            <i class="fas fa-comments me-1"></i>
+                            Community Feedback:
+                        </h6>
+                        <p class="small mb-0">{{ service.community_feedback }}</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        {% if service.website %}
+                        <a href="{{ service.website }}" target="_blank" class="btn btn-primary btn-sm w-100">
+                            <i class="fas fa-external-link-alt me-1"></i> Visit Site
+                        </a>
+                        {% endif %}
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            Verify pricing & services directly with provider
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- State Cost Calculator Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-calculator me-2"></i>
+                {{ state_full_name }} LLC Formation Cost Calculator
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">LLC Formation Costs in {{ state_full_name }}</h5>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-file-alt text-primary me-2"></i>State Filing Fee</h6>
+                                <p class="cost-amount">${{ state_costs.filing_fee }}</p>
+                                <small class="text-muted">One-time fee to register your LLC</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-calendar-alt text-primary me-2"></i>Annual Report Fee</h6>
+                                <p class="cost-amount">${{ state_costs.annual_report }}</p>
+                                <small class="text-muted">Yearly maintenance fee</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-building text-primary me-2"></i>Registered Agent</h6>
+                                <p class="cost-amount">${{ state_costs.registered_agent }}</p>
+                                <small class="text-muted">Annual fee (if using commercial service)</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-dollar-sign text-primary me-2"></i>Total First Year</h6>
+                                <p class="cost-amount total-cost">${{ state_costs.total_first_year }}</p>
+                                <small class="text-muted">Including filing and first year agent</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-section mt-4">
+                        <h6><i class="fas fa-balance-scale text-warning me-2"></i>Comparison: {{ state_full_name }} vs Delaware</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Cost Item</th>
+                                        <th>{{ state_full_name }}</th>
+                                        <th>Delaware</th>
+                                        <th>Difference</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Filing Fee</td>
+                                        <td>${{ state_costs.filing_fee }}</td>
+                                        <td>$90</td>
+                                        <td class="{% if state_costs.filing_fee < 90 %}text-success{% else %}text-danger{% endif %}">
+                                            {% if state_costs.filing_fee < 90 %}-${{ 90 - state_costs.filing_fee }}{% else %}+${{ state_costs.filing_fee - 90 }}{% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Annual Report</td>
+                                        <td>${{ state_costs.annual_report }}</td>
+                                        <td>$300</td>
+                                        <td class="{% if state_costs.annual_report < 300 %}text-success{% else %}text-danger{% endif %}">
+                                            {% if state_costs.annual_report < 300 %}-${{ 300 - state_costs.annual_report }}{% else %}+${{ state_costs.annual_report - 300 }}{% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Registered Agent</td>
+                                        <td>${{ state_costs.registered_agent }}</td>
+                                        <td>$50</td>
+                                        <td class="{% if state_costs.registered_agent < 50 %}text-success{% else %}text-danger{% endif %}">
+                                            {% if state_costs.registered_agent < 50 %}-${{ 50 - state_costs.registered_agent }}{% else %}+${{ state_costs.registered_agent - 50 }}{% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-university me-2"></i>
+                        Government Resources
+                    </h5>
+                    
+                    <div class="gov-links">
+                        <a href="{{ state_costs.gov_website }}" target="_blank" class="btn btn-outline-primary btn-sm w-100 mb-2">
+                            <i class="fas fa-external-link-alt me-1"></i>
+                            {{ state_full_name }} Secretary of State
+                        </a>
+                        
+                        <a href="https://www.irs.gov/businesses/small-businesses-self-employed/employer-identification-numbers" target="_blank" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+                            <i class="fas fa-external-link-alt me-1"></i>
+                            IRS EIN Application
+                        </a>
+                        
+                        <a href="https://www.sba.gov/" target="_blank" class="btn btn-outline-info btn-sm w-100 mb-2">
+                            <i class="fas fa-external-link-alt me-1"></i>
+                            Small Business Administration
+                        </a>
+                        
+                        <div class="alert alert-warning mt-3">
+                            <small>
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <strong>Important:</strong> Costs may vary. Verify current fees with the {{ state_full_name }} Secretary of State before filing.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Registered Agent Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-user-tie me-2"></i>
+                Registered Agent Services for {{ category|replace('-', ' ')|title }} in {{ state_full_name }}
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registered Agent for {{ category|replace('-', ' ')|title }} Businesses</h5>
+                    <p class="mb-3">As a {{ category|replace('-', ' ')|title }} business owner in {{ state_full_name }}, you'll need a registered agent to receive legal documents, tax notices, and compliance requirements. This is especially important for {{ category|replace('-', ' ')|title }} businesses that may have specific regulatory requirements.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <h6><i class="fas fa-check-circle text-success me-2"></i>{{ state_full_name }} Requirements</h6>
+                                <ul class="small">
+                                    <li>Physical address in {{ state_full_name }}</li>
+                                    <li>Available during business hours</li>
+                                    <li>Must accept legal documents</li>
+                                    <li>Cannot be a P.O. Box</li>
+                                    {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                                    <li>May need professional licensing notifications</li>
+                                    {% endif %}
+                                    {% if category in ['cannabis', 'real-estate-agents', 'realtors'] %}
+                                    <li>Industry-specific compliance requirements</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <h6><i class="fas fa-exclamation-triangle text-warning me-2"></i>Penalties</h6>
+                                <ul class="small">
+                                    <li>Administrative dissolution</li>
+                                    <li>Loss of good standing</li>
+                                    <li>Late filing fees</li>
+                                    <li>Legal service issues</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6 class="text-primary">{{ state_full_name }} Registered Agent Cost Breakdown:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Cost Range</th>
+                                    <th>What's Included</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>DIY (Self-Service)</strong></td>
+                                    <td>$0</td>
+                                    <td>You act as your own agent, must be available during business hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Commercial Service</strong></td>
+                                    <td>${{ state_costs.registered_agent }}-$200/year</td>
+                                    <td>Professional service, privacy protection, compliance monitoring</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Premium Service</strong></td>
+                                    <td>$200-$500/year</td>
+                                    <td>Mail forwarding, compliance alerts, document scanning</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        Pro Tips
+                    </h5>
+                    <div class="tips-list">
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-shield-alt text-info me-2"></i>Privacy Protection</h6>
+                            <p class="small">Commercial agents keep your personal address off public records</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-clock text-warning me-2"></i>Availability</h6>
+                            <p class="small">Professional agents are available during all business hours</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-bell text-success me-2"></i>{{ state_full_name }} Compliance</h6>
+                            <p class="small">Get notified about {{ state_full_name }} deadlines and {{ category|replace('-', ' ')|title }} requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S-Corp vs LLC Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-balance-scale me-2"></i>
+                S-Corp vs LLC for {{ category|replace('-', ' ')|title }} in {{ state_full_name }}
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-building me-2"></i>
+                        LLC (Limited Liability Company)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">Formation Costs:</h6>
+                        <ul class="small">
+                            <li>State Filing Fee: ${{ state_costs.filing_fee }}</li>
+                            <li>Registered Agent: ${{ state_costs.registered_agent }}/year</li>
+                            <li>Annual Report: ${{ state_costs.annual_report }}/year</li>
+                            <li><strong>Total First Year: ${{ state_costs.total_first_year }}</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-success">Advantages for {{ category|replace('-', ' ')|title }}:</h6>
+                        <ul class="small">
+                            <li>Pass-through taxation (no double taxation)</li>
+                            <li>Flexible management structure</li>
+                            <li>Limited personal liability</li>
+                            <li>Easier to form and maintain</li>
+                            <li>No ownership restrictions</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>Professional liability protection</li>
+                            {% endif %}
+                            {% if category in ['real-estate-agents', 'realtors', 'property-management'] %}
+                            <li>Real estate transaction protection</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>Industry compliance flexibility</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-warning">Disadvantages:</h6>
+                        <ul class="small">
+                            <li>Self-employment taxes on all income</li>
+                            <li>Less formal structure</li>
+                            <li>May have higher tax burden for high earners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2"></i>
+                        S-Corporation
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">Formation Costs:</h6>
+                        <ul class="small">
+                            <li>State Filing Fee: ${{ state_costs.filing_fee }}</li>
+                            <li>Registered Agent: ${{ state_costs.registered_agent }}/year</li>
+                            <li>Annual Report: ${{ state_costs.annual_report }}/year</li>
+                            <li>IRS Form 2553: $0 (but required)</li>
+                            <li>Additional Compliance: $200-500/year</li>
+                            <li><strong>Total First Year: ${{ state_costs.total_first_year + 200 }}</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-success">Advantages for {{ category|replace('-', ' ')|title }}:</h6>
+                        <ul class="small">
+                            <li>Potential tax savings on self-employment taxes</li>
+                            <li>More formal business structure</li>
+                            <li>Limited personal liability</li>
+                            <li>Pass-through taxation</li>
+                            <li>Professional image</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>Professional credibility with patients</li>
+                            {% endif %}
+                            {% if category in ['real-estate-agents', 'realtors', 'property-management'] %}
+                            <li>Credibility with clients and lenders</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>Enhanced regulatory compliance</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-warning">Disadvantages:</h6>
+                        <ul class="small">
+                            <li>More complex compliance requirements</li>
+                            <li>Higher formation and maintenance costs</li>
+                            <li>Ownership restrictions (max 100 shareholders)</li>
+                            <li>Must be U.S. citizens/residents</li>
+                            <li>Requires reasonable salary for owners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-calculator me-2"></i>
+                        {{ category|replace('-', ' ')|title }} Tax Comparison in {{ state_full_name }}
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">{{ category|replace('-', ' ')|title }} LLC Tax Example:</h6>
+                            <p class="small">If your {{ category|replace('-', ' ')|title }} business earns $100,000:</p>
+                            <ul class="small">
+                                <li>Self-employment tax: ~$14,130 (15.3%)</li>
+                                <li>{{ state_full_name }} state tax: Varies by bracket</li>
+                                <li><strong>Total tax burden: Higher</strong></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success">{{ category|replace('-', ' ')|title }} S-Corp Tax Example:</h6>
+                            <p class="small">If your {{ category|replace('-', ' ')|title }} business earns $100,000:</p>
+                            <ul class="small">
+                                <li>Reasonable salary: $50,000</li>
+                                <li>Self-employment tax: ~$7,065 (on salary only)</li>
+                                <li>Distribution: $50,000 (no self-employment tax)</li>
+                                <li><strong>Potential savings: ~$7,065/year</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <h6><i class="fas fa-info-circle me-2"></i>Important Considerations:</h6>
+                        <ul class="mb-0 small">
+                            <li><strong>Consult a {{ state_full_name }} tax professional</strong> before choosing your entity type</li>
+                            <li>S-Corp election requires IRS Form 2553 within 75 days of formation</li>
+                            <li>Tax savings depend on your specific {{ category|replace('-', ' ')|title }} situation and income level</li>
+                            <li>Both entities provide limited liability protection for {{ category|replace('-', ' ')|title }} businesses</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>{{ state_full_name }} professional licensing may affect entity choice</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>{{ state_full_name }} cannabis regulations may impact entity selection</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Businesses List -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-building me-2"></i>
+                {{ category_info.title|default('LLC Services for ' + category|title) }} in {{ state_full_name }}
+            </h2>
+            <p class="lead mb-4">
+                Found {{ businesses|length }} local businesses and service providers in {{ state_full_name }}
+                {% if showing_fallback %}
+                <br><small class="text-info"><i class="fas fa-info-circle me-1"></i>Showing general business services for this category</small>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    {% if businesses %}
+    <div class="row">
+        {% for business in businesses %}
+        <div class="col-lg-6 mb-4">
+            <div class="card business-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ business.name }}</h5>
+                        <span class="category-badge">{{ business.category|default('Service') }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ business.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ business.reviews }} reviews)</span>
+                    </div>
+                    
+                    <p class="location-info mb-3">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {% if business.full_address %}
+                            {{ business.full_address }}
+                        {% else %}
+                            {{ business.city }}, {{ business.state }}
+                        {% endif %}
+                    </p>
+                    
+                    {% if business.phone %}
+                    <p class="mb-2">
+                        <i class="fas fa-phone me-1"></i>
+                        <a href="tel:{{ business.phone }}" class="text-decoration-none">{{ business.phone }}</a>
+                    </p>
+                    {% endif %}
+                    
+                    {% if business.site %}
+                    <p class="mb-0">
+                        <i class="fas fa-globe me-1"></i>
+                        <a href="{{ business.site }}" target="_blank" class="text-decoration-none">Visit Website</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h3>No local businesses found in {{ state_full_name }}</h3>
+        <p class="text-muted mb-4">We couldn't find any local businesses matching "{{ category|replace('-', ' ')|title }}" in {{ state_full_name }}.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>Suggestions:</h5>
+                    <ul class="mb-0">
+                        <li>Try a different category or use case</li>
+                        <li>Check other states for similar services</li>
+                        <li>Use the top 3 LLC services above for formation needs</li>
+                        <li>Contact local business associations in {{ state_full_name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Back to Category -->
+<section class="container mb-5">
+    <div class="text-center">
+        <a href="{{ url_for('use_case_hub', category=category) }}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Back to All {{ category_info.title|default('LLC Services for ' + category|title) }}
+        </a>
+    </div>
+</section>
+{% endblock %}

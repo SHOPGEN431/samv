@@ -1,0 +1,1100 @@
+{% extends "base.html" %}
+
+{% block title %}🔥 {{ category_info.title|default(category|title + ' LLC Services') }} 2025 - Find the BEST Providers!{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item active">{{ category_info.title|default('LLC Services for ' + category|title) }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">🔥 {{ category_info.title|default(category|title + ' LLC Services') }} 2025</h1>
+            <p class="lead mb-4">
+                <strong>🚀 Discover the TOP-RATED {{ category_info.title|default(category|title) }} providers in 2025!</strong> 
+                {{ category_info.description|default('Find the BEST ' + category|lower + ' services and professionals for your LLC. Browse top-rated businesses across all states.') }}
+            </p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="stats-card">
+                <h4>{{ businesses|length }}</h4>
+                <p class="mb-0">Businesses Found</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Top 3 LLC Services Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            
+
+            
+            <!-- Disclaimers -->
+            <div class="alert alert-info mb-4">
+                <h6><i class="fas fa-info-circle me-2"></i>Important Disclaimers:</h6>
+                <ul class="mb-2 small">
+                    <li><strong>Pricing & Services:</strong> All pricing and service information should be verified directly with the LLC provider for the most current and accurate details.</li>
+                    <li><strong>Affiliate Disclosure:</strong> We may earn commissions from affiliate links on this page. This helps support our free content and research.</li>
+                    <li><strong>AI-Generated Content:</strong> This content was written with AI assistance. Please verify all information for accuracy before making business decisions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for service_key, service in top_llc_services.items() %}
+        <div class="col-lg-4 mb-4">
+            {% if service_key == 'northwest_registered_agent' %}
+            <div class="card h-100 border-primary northwest-featured">
+            {% else %}
+            <div class="card h-100 border-primary">
+            {% endif %}
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-star text-warning me-2"></i>
+                            {{ service.name }}
+                        </h5>
+                        {% if service.popularity %}
+                        {% if service_key == 'northwest_registered_agent' %}
+                        <span class="badge bg-danger text-white">
+                            <i class="fas fa-fire me-1"></i>
+                            {{ service.popularity }}
+                        </span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">
+                            <i class="fas fa-crown me-1"></i>
+                            {{ service.popularity }}
+                        </span>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ service.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ service.reviews }} reviews)</span>
+                    </div>
+                    
+                    {% if service.description %}
+                    <div class="mb-3">
+                        <p class="text-muted small">{{ service.description }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if service.formation_packages %}
+                        <!-- ZenBusiness with multiple packages -->
+                        <h6 class="text-primary mb-3">Formation Packages:</h6>
+                        {% for package_key, package in service.formation_packages.items() %}
+                        <div class="mb-2">
+                            <strong>{{ package.name }}:</strong> {{ package.cost }}
+                            <br><small class="text-muted">{{ package.description }}</small>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Other services with single pricing -->
+                        <h6 class="text-primary mb-2">Formation Cost:</h6>
+                        <p class="mb-2"><strong>{{ service.formation_cost }}</strong></p>
+                        <p class="text-muted small mb-3">{{ service.formation_includes }}</p>
+                    {% endif %}
+                    
+                    <h6 class="text-primary mb-2">Registered Agent Renewal:</h6>
+                    <p class="mb-2"><strong>{{ service.renewal_cost }}</strong></p>
+                    <p class="text-muted small mb-3">{{ service.renewal_note }}</p>
+                    
+                    <div class="bg-light p-3 rounded mb-3">
+                        <h6 class="text-success mb-2">
+                            <i class="fas fa-comments me-1"></i>
+                            Community Feedback:
+                        </h6>
+                        <p class="small mb-0">{{ service.community_feedback }}</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        {% if service.website %}
+                        <a href="{{ service.website }}" target="_blank" class="btn btn-primary btn-sm w-100">
+                            <i class="fas fa-external-link-alt me-1"></i> Visit Site
+                        </a>
+                        {% endif %}
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            Verify pricing & services directly with provider
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- General Cost Calculator Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-calculator me-2"></i>
+                LLC Formation Cost Overview
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Typical LLC Formation Costs</h5>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-file-alt text-primary me-2"></i>State Filing Fee</h6>
+                                <p class="cost-amount">$40-$500</p>
+                                <small class="text-muted">Varies by state</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-calendar-alt text-primary me-2"></i>Annual Report Fee</h6>
+                                <p class="cost-amount">$0-$300</p>
+                                <small class="text-muted">Yearly maintenance fee</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-building text-primary me-2"></i>Registered Agent</h6>
+                                <p class="cost-amount">$50-$200/year</p>
+                                <small class="text-muted">Annual fee (if using commercial service)</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cost-item">
+                                <h6><i class="fas fa-dollar-sign text-primary me-2"></i>Total First Year</h6>
+                                <p class="cost-amount total-cost">$90-$700</p>
+                                <small class="text-muted">Including filing and first year agent</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-section mt-4">
+                        <h6><i class="fas fa-balance-scale text-warning me-2"></i>Cost Comparison: Popular States</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Filing Fee</th>
+                                        <th>Annual Report</th>
+                                        <th>Total First Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Delaware</strong></td>
+                                        <td>$90</td>
+                                        <td>$300</td>
+                                        <td>$140</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>California</strong></td>
+                                        <td>$70</td>
+                                        <td>$20</td>
+                                        <td>$120</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Texas</strong></td>
+                                        <td>$300</td>
+                                        <td>$0</td>
+                                        <td>$350</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Florida</strong></td>
+                                        <td>$125</td>
+                                        <td>$138.75</td>
+                                        <td>$175</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>New York</strong></td>
+                                        <td>$200</td>
+                                        <td>$9</td>
+                                        <td>$250</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-university me-2"></i>
+                        Government Resources
+                    </h5>
+                    
+                    <div class="gov-links">
+                        <a href="https://www.irs.gov/businesses/small-businesses-self-employed/employer-identification-numbers" target="_blank" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+                            <i class="fas fa-external-link-alt me-1"></i>
+                            IRS EIN Application
+                        </a>
+                        
+                        <a href="https://www.sba.gov/" target="_blank" class="btn btn-outline-info btn-sm w-100 mb-2">
+                            <i class="fas fa-external-link-alt me-1"></i>
+                            Small Business Administration
+                        </a>
+                        
+                        <div class="alert alert-warning mt-3">
+                            <small>
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <strong>Important:</strong> Costs vary by state. Check your specific state's Secretary of State website for current fees.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Registered Agent Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-user-tie me-2"></i>
+                Registered Agent Services for {{ category|replace('-', ' ')|title }}
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registered Agent for {{ category|replace('-', ' ')|title }} Businesses</h5>
+                    <p class="mb-3">As a {{ category|replace('-', ' ')|title }} business owner, you'll need a registered agent to receive legal documents, tax notices, and compliance requirements. This is especially important for {{ category|replace('-', ' ')|title }} businesses that may have specific regulatory requirements.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <h6><i class="fas fa-check-circle text-success me-2"></i>General Requirements</h6>
+                                <ul class="small">
+                                    <li>Physical address in formation state</li>
+                                    <li>Available during business hours</li>
+                                    <li>Must accept legal documents</li>
+                                    <li>Cannot be a P.O. Box</li>
+                                    {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                                    <li>May need professional licensing notifications</li>
+                                    {% endif %}
+                                    {% if category in ['cannabis', 'real-estate-agents', 'realtors'] %}
+                                    <li>Industry-specific compliance requirements</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <h6><i class="fas fa-exclamation-triangle text-warning me-2"></i>Penalties</h6>
+                                <ul class="small">
+                                    <li>Administrative dissolution</li>
+                                    <li>Loss of good standing</li>
+                                    <li>Late filing fees</li>
+                                    <li>Legal service issues</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6 class="text-primary">Registered Agent Cost Breakdown:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Cost Range</th>
+                                    <th>What's Included</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>DIY (Self-Service)</strong></td>
+                                    <td>$0</td>
+                                    <td>You act as your own agent, must be available during business hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Commercial Service</strong></td>
+                                    <td>$50-$200/year</td>
+                                    <td>Professional service, privacy protection, compliance monitoring</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Premium Service</strong></td>
+                                    <td>$200-$500/year</td>
+                                    <td>Mail forwarding, compliance alerts, document scanning</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        Pro Tips
+                    </h5>
+                    <div class="tips-list">
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-shield-alt text-info me-2"></i>Privacy Protection</h6>
+                            <p class="small">Commercial agents keep your personal address off public records</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-clock text-warning me-2"></i>Availability</h6>
+                            <p class="small">Professional agents are available during all business hours</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6><i class="fas fa-bell text-success me-2"></i>Compliance Alerts</h6>
+                            <p class="small">Get notified about important deadlines and requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S-Corp vs LLC Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-balance-scale me-2"></i>
+                S-Corp vs LLC for {{ category|replace('-', ' ')|title }}
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-building me-2"></i>
+                        LLC (Limited Liability Company)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">Formation Costs:</h6>
+                        <ul class="small">
+                            <li>State Filing Fee: $40-$500 (varies by state)</li>
+                            <li>Registered Agent: $50-$200/year</li>
+                            <li>Annual Report: $0-$300/year</li>
+                            <li><strong>Total First Year: $90-$700</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-success">Advantages for {{ category|replace('-', ' ')|title }}:</h6>
+                        <ul class="small">
+                            <li>Pass-through taxation (no double taxation)</li>
+                            <li>Flexible management structure</li>
+                            <li>Limited personal liability</li>
+                            <li>Easier to form and maintain</li>
+                            <li>No ownership restrictions</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>Professional liability protection</li>
+                            {% endif %}
+                            {% if category in ['real-estate-agents', 'realtors', 'property-management'] %}
+                            <li>Real estate transaction protection</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>Industry compliance flexibility</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-warning">Disadvantages:</h6>
+                        <ul class="small">
+                            <li>Self-employment taxes on all income</li>
+                            <li>Less formal structure</li>
+                            <li>May have higher tax burden for high earners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2"></i>
+                        S-Corporation
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">Formation Costs:</h6>
+                        <ul class="small">
+                            <li>State Filing Fee: $40-$500 (varies by state)</li>
+                            <li>Registered Agent: $50-$200/year</li>
+                            <li>Annual Report: $0-$300/year</li>
+                            <li>IRS Form 2553: $0 (but required)</li>
+                            <li>Additional Compliance: $200-500/year</li>
+                            <li><strong>Total First Year: $290-$1200</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-success">Advantages for {{ category|replace('-', ' ')|title }}:</h6>
+                        <ul class="small">
+                            <li>Potential tax savings on self-employment taxes</li>
+                            <li>More formal business structure</li>
+                            <li>Limited personal liability</li>
+                            <li>Pass-through taxation</li>
+                            <li>Professional image</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>Professional credibility with patients</li>
+                            {% endif %}
+                            {% if category in ['real-estate-agents', 'realtors', 'property-management'] %}
+                            <li>Credibility with clients and lenders</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>Enhanced regulatory compliance</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-warning">Disadvantages:</h6>
+                        <ul class="small">
+                            <li>More complex compliance requirements</li>
+                            <li>Higher formation and maintenance costs</li>
+                            <li>Ownership restrictions (max 100 shareholders)</li>
+                            <li>Must be U.S. citizens/residents</li>
+                            <li>Requires reasonable salary for owners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-calculator me-2"></i>
+                        {{ category|replace('-', ' ')|title }} Tax Comparison
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">{{ category|replace('-', ' ')|title }} LLC Tax Example:</h6>
+                            <p class="small">If your {{ category|replace('-', ' ')|title }} business earns $100,000:</p>
+                            <ul class="small">
+                                <li>Self-employment tax: ~$14,130 (15.3%)</li>
+                                <li>State tax: Varies by state</li>
+                                <li><strong>Total tax burden: Higher</strong></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success">{{ category|replace('-', ' ')|title }} S-Corp Tax Example:</h6>
+                            <p class="small">If your {{ category|replace('-', ' ')|title }} business earns $100,000:</p>
+                            <ul class="small">
+                                <li>Reasonable salary: $50,000</li>
+                                <li>Self-employment tax: ~$7,065 (on salary only)</li>
+                                <li>Distribution: $50,000 (no self-employment tax)</li>
+                                <li><strong>Potential savings: ~$7,065/year</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <h6><i class="fas fa-info-circle me-2"></i>Important Considerations:</h6>
+                        <ul class="mb-0 small">
+                            <li><strong>Consult a tax professional</strong> before choosing your entity type</li>
+                            <li>S-Corp election requires IRS Form 2553 within 75 days of formation</li>
+                            <li>Tax savings depend on your specific {{ category|replace('-', ' ')|title }} situation and income level</li>
+                            <li>Both entities provide limited liability protection for {{ category|replace('-', ' ')|title }} businesses</li>
+                            {% if category in ['doctors', 'dentists', 'chiropractors', 'therapists'] %}
+                            <li>Professional licensing may affect entity choice</li>
+                            {% endif %}
+                            {% if category in ['cannabis'] %}
+                            <li>Cannabis regulations may impact entity selection</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- State Navigation -->
+<section class="container mb-5">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Browse by State</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                                 {% for state in states %}
+                 <div class="col-md-3 col-sm-4 col-6 mb-2">
+                     <a href="{{ url_for('use_case_state', category=category, state=state) }}" 
+                        class="btn btn-outline-primary btn-sm w-100">
+                         {{ get_state_full_name(state) }}
+                     </a>
+                 </div>
+                 {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Businesses List -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">🔥 TOP {{ category_info.title|default('LLC Services for ' + category|title) }} Providers 2025</h2>
+        </div>
+    </div>
+    
+    {% if businesses %}
+    <div class="row">
+        {% for business in businesses %}
+        <div class="col-lg-6 mb-4">
+            <div class="card business-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ business.name }}</h5>
+                        <span class="category-badge">{{ business.category|default('Service') }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ business.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ business.reviews }} reviews)</span>
+                    </div>
+                    
+                    <p class="location-info mb-3">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {% if business.full_address %}
+                            {{ business.full_address }}
+                        {% else %}
+                            {{ business.city }}, {{ business.state }}
+                        {% endif %}
+                    </p>
+                    
+                    {% if business.phone %}
+                    <p class="mb-2">
+                        <i class="fas fa-phone me-1"></i>
+                        <a href="tel:{{ business.phone }}" class="text-decoration-none">{{ business.phone }}</a>
+                    </p>
+                    {% endif %}
+                    
+                    {% if business.site %}
+                    <p class="mb-0">
+                        <i class="fas fa-globe me-1"></i>
+                        <a href="{{ business.site }}" target="_blank" class="text-decoration-none">Visit Website</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h3>No businesses found</h3>
+        <p class="text-muted">Try adjusting your search criteria or browse by state.</p>
+    </div>
+    {% endif %}
+</section>
+
+    <!-- Related LLC Services -->
+    <section class="container mb-5">
+        <h3 class="mb-4">Other LLC Registration Services</h3>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='doctors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-user-md me-2"></i>LLC for Doctors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='rental-properties') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-home me-2"></i>LLC for Rental Properties
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='vending-machines') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-cogs me-2"></i>LLC for Vending Machines
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='realtors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-key me-2"></i>LLC for Realtors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='small-business') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-store me-2"></i>LLC for Small Business
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='airbnb') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bed me-2"></i>LLC for Airbnb
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='trucking') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-truck me-2"></i>LLC for Trucking
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='cannabis') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-leaf me-2"></i>LLC for Cannabis
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='hair-salon') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-cut me-2"></i>LLC for Hair Salon
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='etsy') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-shopping-bag me-2"></i>LLC for Etsy
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='amazon-fba') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-box me-2"></i>LLC for Amazon FBA
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='bakery') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-birthday-cake me-2"></i>LLC for Bakery
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='investment-property') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-chart-line me-2"></i>LLC for Investment Property
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='clothing-brand') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tshirt me-2"></i>LLC for Clothing Brand
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='dropshipping') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-shipping-fast me-2"></i>LLC for Dropshipping
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='contractor') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-hammer me-2"></i>LLC for Contractor
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='roofers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-home me-2"></i>LLC for Roofers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='ecommerce') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-shopping-cart me-2"></i>LLC for Ecommerce
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='photographer') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-camera me-2"></i>LLC for Photographer
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='shopify') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-store-alt me-2"></i>LLC for Shopify
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='handyman') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tools me-2"></i>LLC for Handyman
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='uber') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-car me-2"></i>LLC for Uber
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='lyft') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-car-side me-2"></i>LLC for Lyft
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='limo') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-car me-2"></i>LLC for Limo
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='handymen') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tools me-2"></i>LLC for Handymen
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='electricians') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bolt me-2"></i>LLC for Electricians
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='plumbers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-faucet me-2"></i>LLC for Plumbers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='landscapers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tree me-2"></i>LLC for Landscapers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='cleaning-businesses') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-broom me-2"></i>LLC for Cleaning Businesses
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='painters') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-paint-brush me-2"></i>LLC for Painters
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='hvac-technicians') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-snowflake me-2"></i>LLC for HVAC Technicians
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='dentists') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tooth me-2"></i>LLC for Dentists
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='chiropractors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-spine me-2"></i>LLC for Chiropractors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='therapists') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-brain me-2"></i>LLC for Therapists
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='nutritionists') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-apple-alt me-2"></i>LLC for Nutritionists
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='personal-trainers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-dumbbell me-2"></i>LLC for Personal Trainers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='landlords') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-key me-2"></i>LLC for Landlords
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='airbnb-hosts') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bed me-2"></i>LLC for Airbnb Hosts
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='real-estate-agents') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-home me-2"></i>LLC for Real Estate Agents
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='property-management') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-building me-2"></i>LLC for Property Management
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='house-flippers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-hammer me-2"></i>LLC for House Flippers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='e-commerce') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-shopping-cart me-2"></i>LLC for E-commerce
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='freelancers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-laptop me-2"></i>LLC for Freelancers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='consultants') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-user-tie me-2"></i>LLC for Consultants
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='social-media-influencers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-share-alt me-2"></i>LLC for Social Media Influencers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='online-coaches') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-graduation-cap me-2"></i>LLC for Online Coaches
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='content-creators') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-video me-2"></i>LLC for Content Creators
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='stock-trading') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-chart-line me-2"></i>LLC for Stock Trading
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='day-trading') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-chart-bar me-2"></i>LLC for Day Trading
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='crypto-trading') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-coins me-2"></i>LLC for Crypto Trading
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='financial-advisors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-user-tie me-2"></i>LLC for Financial Advisors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='rideshare-drivers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-car me-2"></i>LLC for Rideshare Drivers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='restaurants') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-utensils me-2"></i>LLC for Restaurants
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='food-trucks') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-truck me-2"></i>LLC for Food Trucks
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='salons') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-cut me-2"></i>LLC for Salons
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='barbers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-cut me-2"></i>LLC for Barbers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='event-planners') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-calendar-alt me-2"></i>LLC for Event Planners
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='drywall-installers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-tools me-2"></i>LLC for Drywall Installers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='window-installers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-window-maximize me-2"></i>LLC for Window Installers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='insulation-companies') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-thermometer-half me-2"></i>LLC for Insulation Companies
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='solar-panel-installers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-solar-panel me-2"></i>LLC for Solar Panel Installers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='fencing-companies') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-border-all me-2"></i>LLC for Fencing Companies
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='videographers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-video-camera me-2"></i>LLC for Videographers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='podcasters') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-microphone me-2"></i>LLC for Podcasters
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='marketing-agencies') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bullhorn me-2"></i>LLC for Marketing Agencies
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='seo-consultants') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-search me-2"></i>LLC for SEO Consultants
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='pr-firms') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-newspaper me-2"></i>LLC for PR Firms
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='it-consultants') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-desktop me-2"></i>LLC for IT Consultants
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='software-developers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-code me-2"></i>LLC for Software Developers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='cybersecurity-firms') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-shield-alt me-2"></i>LLC for Cybersecurity Firms
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='msps') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-server me-2"></i>LLC for MSPs
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='saas-businesses') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-cloud me-2"></i>LLC for SaaS Businesses
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='woodworking-businesses') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-hammer me-2"></i>LLC for Woodworking Businesses
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='jewelry-makers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-gem me-2"></i>LLC for Jewelry Makers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='candle-makers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-fire me-2"></i>LLC for Candle Makers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='soap-makers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bubbles me-2"></i>LLC for Soap Makers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='farmers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-seedling me-2"></i>LLC for Farmers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='ranchers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-horse me-2"></i>LLC for Ranchers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='beekeepers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bee me-2"></i>LLC for Beekeepers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='greenhouse-businesses') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-warehouse me-2"></i>LLC for Greenhouse Businesses
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='landscaping-supply-companies') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-store me-2"></i>LLC for Landscaping Supply Companies
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='driving-schools') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-car me-2"></i>LLC for Driving Schools
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='test-prep-tutors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-graduation-cap me-2"></i>LLC for Test Prep Tutors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='language-instructors') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-language me-2"></i>LLC for Language Instructors
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='career-coaches') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-briefcase me-2"></i>LLC for Career Coaches
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='corporate-trainers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-chalkboard-teacher me-2"></i>LLC for Corporate Trainers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='charter-bus-companies') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-bus me-2"></i>LLC for Charter Bus Companies
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='boat-rental-businesses') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-ship me-2"></i>LLC for Boat Rental Businesses
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='trucking-dispatchers') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-route me-2"></i>LLC for Trucking Dispatchers
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='tour-guides') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-map-marked-alt me-2"></i>LLC for Tour Guides
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ url_for('use_case_hub', category='llc-registration') }}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-building me-2"></i>General LLC Registration
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
