@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 STATIC HTML APPROACH - Following ramzan's successful deployment method"
+git commit -m "🔧 FIXED STATIC FILE SERVING - Recreated static folder and index.html"
 
 REM Push to GitHub
 git push origin master
