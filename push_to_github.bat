@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 Optimized CSV for Vercel - Created smaller optimized files and enhanced data loading"
+git commit -m "🔧 Simplified approach like ramzan repo - Direct CSV loading with minimal config"
 
 REM Push to GitHub
 git push origin master

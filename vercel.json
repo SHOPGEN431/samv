@@ -11,11 +11,5 @@
       "src": "/(.*)",
       "dest": "/app.py"
     }
-  ],
-  "functions": {
-    "app.py": {
-      "includeFiles": "LLC_Data_Optimized.csv,LLC_Data_Optimized.json,LLC Data.csv",
-      "maxDuration": 30
-    }
-  }
+  ]
 }

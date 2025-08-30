@@ -15,60 +15,21 @@ app = Flask(__name__)
 # Load and process the CSV data
 def load_data():
     try:
-        # Try multiple possible paths for the optimized files first
-        possible_paths = [
-            # Try optimized files first (smaller, faster)
-            os.path.join(os.path.dirname(__file__), 'LLC_Data_Optimized.csv'),
-            'LLC_Data_Optimized.csv',
-            os.path.join(os.getcwd(), 'LLC_Data_Optimized.csv'),
-            '/var/task/LLC_Data_Optimized.csv',
-            '/tmp/LLC_Data_Optimized.csv',
-            # Then try JSON version
-            os.path.join(os.path.dirname(__file__), 'LLC_Data_Optimized.json'),
-            'LLC_Data_Optimized.json',
-            os.path.join(os.getcwd(), 'LLC_Data_Optimized.json'),
-            '/var/task/LLC_Data_Optimized.json',
-            '/tmp/LLC_Data_Optimized.json',
-            # Finally try original CSV
-            os.path.join(os.path.dirname(__file__), 'LLC Data.csv'),
-            'LLC Data.csv',
-            os.path.join(os.getcwd(), 'LLC Data.csv'),
-            '/var/task/LLC Data.csv',
-            '/tmp/LLC Data.csv'
-        ]
+        # Simple, direct approach like the successful ramzan repository
+        csv_path = 'LLC Data.csv'
         
-        df = None
-        data_loaded = False
-        
-        for file_path in possible_paths:
-            try:
-                if os.path.exists(file_path):
-                    print(f"Attempting to load data from: {file_path}")
-                    
-                    if file_path.endswith('.json'):
-                        # Load JSON file
-                        df = pd.read_json(file_path)
-                        print(f"Successfully loaded JSON from: {file_path}")
-                    else:
-                        # Load CSV file
-                        df = pd.read_csv(file_path, low_memory=False)
-                        print(f"Successfully loaded CSV from: {file_path}")
-                    
-                    print(f"Data contains {len(df)} rows and {len(df.columns)} columns")
-                    data_loaded = True
-                    break
-            except Exception as e:
-                print(f"Failed to load from {file_path}: {e}")
-                continue
-        
-        if not data_loaded or df is None or df.empty:
-            print("Could not load real data files, using embedded sample data")
-            # Use embedded data if available, otherwise create basic sample data
+        if os.path.exists(csv_path):
+            print(f"Loading CSV from: {csv_path}")
+            df = pd.read_csv(csv_path)
+            print(f"Successfully loaded CSV: {len(df)} rows, {len(df.columns)} columns")
+        else:
+            print(f"CSV file not found at: {csv_path}")
+            # Use embedded data as fallback
             if EMBEDDED_BUSINESS_DATA:
                 df = pd.DataFrame(EMBEDDED_BUSINESS_DATA)
                 print("Using embedded sample data")
             else:
-                # Create basic sample data as fallback
+                # Create basic sample data
                 sample_data = {
                     'name': ['ABC Legal Services', 'XYZ Business Solutions', 'Premier LLC Formation'],
                     'city': ['Los Angeles', 'New York', 'Chicago'],
