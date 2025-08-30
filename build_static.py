@@ -134,6 +134,19 @@ def generate_static_files():
         'trucking-dispatchers', 'tour-guides', 'llc-registration', 'accounting', 'legal'
     ]
     
+    # All US states with full names
+    states = [
+        'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut',
+        'delaware', 'florida', 'georgia', 'hawaii', 'idaho', 'illinois', 'indiana', 'iowa',
+        'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan',
+        'minnesota', 'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new-hampshire',
+        'new-jersey', 'new-mexico', 'new-york', 'north-carolina', 'north-dakota', 'ohio',
+        'oklahoma', 'oregon', 'pennsylvania', 'rhode-island', 'south-carolina', 'south-dakota',
+        'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west-virginia',
+        'wisconsin', 'wyoming', 'district-of-columbia'
+    ]
+    
+    # Generate use case hub pages
     for use_case in use_cases:
         with static_app.test_client() as client:
             response = client.get(f'/use-cases/{use_case}/')
@@ -142,6 +155,16 @@ def generate_static_files():
                 with open(os.path.join(output_dir, "use-cases", use_case, "index.html"), "w", encoding="utf-8") as f:
                     f.write(response.data.decode("utf-8"))
                 print(f"✅ Generated use-cases/{use_case}/index.html")
+        
+        # Generate state pages for each use case
+        for state in states:
+            with static_app.test_client() as client:
+                response = client.get(f'/use-cases/{use_case}/{state}/')
+                if response.status_code == 200:
+                    os.makedirs(os.path.join(output_dir, "use-cases", use_case, state), exist_ok=True)
+                    with open(os.path.join(output_dir, "use-cases", use_case, state, "index.html"), "w", encoding="utf-8") as f:
+                        f.write(response.data.decode("utf-8"))
+                    print(f"✅ Generated use-cases/{use_case}/{state}/index.html")
     
     # Create sitemap
     with static_app.test_client() as client:
