@@ -144,43 +144,54 @@ def clean_text(text):
     cleaned = re.sub(r'\s+', '-', cleaned.strip())
     return cleaned.lower()
 
+def get_state_full_name(state_code):
+    """Convert state code to full name"""
+    state_names = {
+        'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+        'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'FL': 'Florida', 'GA': 'Georgia',
+        'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa',
+        'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+        'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri',
+        'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey',
+        'NM': 'New Mexico', 'NY': 'New York', 'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio',
+        'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+        'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+        'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming',
+        'DC': 'District of Columbia'
+    }
+    return state_names.get(state_code.upper(), state_code)
+
 # Load data when app starts
 load_data_from_csv()
 
 @app.route('/')
 def index():
     """Homepage"""
-    # Get top 25 states by business count
-    top_states = sorted(states_data.items(), key=lambda x: len(x[1]), reverse=True)[:25]
+    # Get all states as a simple list for the template
+    states = list(states_data.keys())
+    states.sort()
 
-    # Get top 25 cities by business count - format as tuples for template
-    top_cities = []
-    for city_key, businesses in cities_data.items():
-        city_name, state_name = city_key.split('_', 1)
-        top_cities.append((city_name, businesses))
-    top_cities = sorted(top_cities, key=lambda x: len(x[1]), reverse=True)[:25]
-
-    # Get all states for the browse section
-    states = []
-    for state_name, businesses in states_data.items():
-        states.append((state_name, businesses))
-    states = sorted(states, key=lambda x: len(x[1]), reverse=True)
-
-    stats = {
-        'states': min(len(states_data), 50),  # Cap at 50 states
-        'cities': len(cities_data),
-        'businesses': len(businesses_data)
-    }
+    # Get top rated businesses
+    top_rated = []
+    for business in businesses_data:
+        if business.get('rating'):
+            try:
+                rating = float(business['rating'])
+                if rating >= 4.0:
+                    top_rated.append(business)
+            except:
+                pass
+    
+    # Sort by rating and take top 10
+    top_rated.sort(key=lambda x: float(x.get('rating', 0)), reverse=True)
+    top_rated = top_rated[:10]
 
     return render_template('home.html',
-                         top_states=top_states,
-                         top_cities=top_cities,
-                         states=states,
-                         businesses=businesses_data,
-                         cities=cities_data,
-                         stats=stats,
                          total_businesses=len(businesses_data),
-                         states_count=51)
+                         states=states,
+                         states_count=51,  # 50 states + DC
+                         top_rated=top_rated,
+                         get_state_full_name=get_state_full_name)
 
 @app.route('/about/')
 def about():
