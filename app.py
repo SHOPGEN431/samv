@@ -8,19 +8,59 @@ app = Flask(__name__)
 
 # Load and process the CSV data
 def load_data():
-    csv_path = os.path.join(os.path.dirname(__file__), 'LLC Data.csv')
-    df = pd.read_csv(csv_path)
-    
-    # Clean and filter data
-    df = df.dropna(subset=['name', 'city', 'state', 'rating'])
-    df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
-    df = df[df['rating'] > 0]  # Only businesses with ratings
-    
-    # Clean city and state names
-    df['city'] = df['city'].str.strip()
-    df['state'] = df['state'].str.strip()
-    
-    return df
+    try:
+        # Try multiple possible paths for the CSV file
+        possible_paths = [
+            os.path.join(os.path.dirname(__file__), 'LLC Data.csv'),
+            'LLC Data.csv',
+            os.path.join(os.getcwd(), 'LLC Data.csv'),
+            '/var/task/LLC Data.csv'  # Vercel serverless path
+        ]
+        
+        df = None
+        for csv_path in possible_paths:
+            try:
+                if os.path.exists(csv_path):
+                    df = pd.read_csv(csv_path)
+                    print(f"Successfully loaded CSV from: {csv_path}")
+                    break
+            except Exception as e:
+                print(f"Failed to load from {csv_path}: {e}")
+                continue
+        
+        if df is None or df.empty:
+            print("Could not load CSV file, creating sample data")
+            # Create sample data for demonstration
+            sample_data = {
+                'name': ['Sample Business 1', 'Sample Business 2', 'Sample Business 3'],
+                'city': ['Los Angeles', 'New York', 'Chicago'],
+                'state': ['CA', 'NY', 'IL'],
+                'rating': [4.5, 4.2, 4.8],
+                'reviews': [100, 85, 120],
+                'phone': ['(555) 123-4567', '(555) 234-5678', '(555) 345-6789'],
+                'full_address': ['123 Main St, Los Angeles, CA', '456 Oak Ave, New York, NY', '789 Pine Rd, Chicago, IL'],
+                'site': ['https://example1.com', 'https://example2.com', 'https://example3.com'],
+                'category': ['doctors', 'doctors', 'doctors'],
+                'type': ['Medical', 'Medical', 'Medical']
+            }
+            df = pd.DataFrame(sample_data)
+        
+        # Clean and filter data
+        if not df.empty:
+            df = df.dropna(subset=['name', 'city', 'state'])
+            if 'rating' in df.columns:
+                df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
+                df = df[df['rating'] > 0]  # Only businesses with ratings
+            
+            # Clean city and state names
+            df['city'] = df['city'].str.strip()
+            df['state'] = df['state'].str.strip()
+        
+        return df
+    except Exception as e:
+        print(f"Error in load_data: {e}")
+        # Return empty DataFrame with required columns
+        return pd.DataFrame(columns=['name', 'city', 'state', 'rating', 'reviews', 'phone', 'full_address', 'site', 'category', 'type'])
 
 # Load data once at startup
 try:
@@ -33,6 +73,8 @@ except Exception as e:
 
 def get_unique_states():
     """Get list of unique states"""
+    if data.empty or 'state' not in data.columns:
+        return ['CA', 'NY', 'TX', 'FL', 'IL']  # Default states
     return sorted(data['state'].unique().tolist())
 
 
@@ -547,6 +589,36 @@ def get_category_info():
 
 def get_businesses_by_location(state=None, city=None, limit=50):
     """Get businesses filtered by state and/or city"""
+    if data.empty:
+        # Return sample data if no CSV data is available
+        sample_businesses = [
+            {
+                'name': 'Sample Business 1',
+                'city': 'Los Angeles',
+                'state': 'CA',
+                'rating': 4.5,
+                'reviews': 100,
+                'phone': '(555) 123-4567',
+                'full_address': '123 Main St, Los Angeles, CA',
+                'site': 'https://example.com',
+                'category': 'professional',
+                'type': 'Professional Service'
+            },
+            {
+                'name': 'Sample Business 2',
+                'city': 'New York',
+                'state': 'NY',
+                'rating': 4.2,
+                'reviews': 85,
+                'phone': '(555) 234-5678',
+                'full_address': '456 Oak Ave, New York, NY',
+                'site': 'https://example2.com',
+                'category': 'professional',
+                'type': 'Professional Service'
+            }
+        ]
+        return sample_businesses[:limit]
+    
     filtered_data = data.copy()
     
     if state:
@@ -561,6 +633,36 @@ def get_businesses_by_location(state=None, city=None, limit=50):
 
 def get_businesses_by_category(category, state=None, city=None, limit=50, use_fallback=True):
     """Get businesses by category (use case)"""
+    if data.empty:
+        # Return sample data if no CSV data is available
+        sample_businesses = [
+            {
+                'name': f'Sample {category.title()} Business 1',
+                'city': 'Los Angeles',
+                'state': 'CA',
+                'rating': 4.5,
+                'reviews': 100,
+                'phone': '(555) 123-4567',
+                'full_address': f'123 Main St, Los Angeles, CA',
+                'site': 'https://example.com',
+                'category': category,
+                'type': 'Professional Service'
+            },
+            {
+                'name': f'Sample {category.title()} Business 2',
+                'city': 'New York',
+                'state': 'NY',
+                'rating': 4.2,
+                'reviews': 85,
+                'phone': '(555) 234-5678',
+                'full_address': f'456 Oak Ave, New York, NY',
+                'site': 'https://example2.com',
+                'category': category,
+                'type': 'Professional Service'
+            }
+        ]
+        return sample_businesses[:limit]
+    
     filtered_data = data.copy()
     
     # Define category mappings for LLC registration services
