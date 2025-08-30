@@ -67,3 +67,6 @@ logs/
 # Backup files
 *.bak
 *.backup
+
+# Temporary analysis folders
+temp_ramzan/

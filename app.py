@@ -12,57 +12,72 @@ except ImportError:
 
 app = Flask(__name__)
 
-# Load and process the CSV data
+# Load and process the CSV data using the successful ramzan approach
 def load_data():
+    """Load business data from CSV file using the successful ramzan repository approach"""
     try:
-        # Simple, direct approach like the successful ramzan repository
-        csv_path = 'LLC Data.csv'
-        
-        if os.path.exists(csv_path):
-            print(f"Loading CSV from: {csv_path}")
-            df = pd.read_csv(csv_path)
-            print(f"Successfully loaded CSV: {len(df)} rows, {len(df.columns)} columns")
+        # Check if running on Vercel (production) or local development
+        if os.environ.get('VERCEL_ENV'):
+            # For Vercel deployment, use the CSV file in the repository
+            csv_file = "LLC Data.csv"
         else:
-            print(f"CSV file not found at: {csv_path}")
-            # Use embedded data as fallback
-            if EMBEDDED_BUSINESS_DATA:
-                df = pd.DataFrame(EMBEDDED_BUSINESS_DATA)
-                print("Using embedded sample data")
-            else:
-                # Create basic sample data
-                sample_data = {
-                    'name': ['ABC Legal Services', 'XYZ Business Solutions', 'Premier LLC Formation'],
-                    'city': ['Los Angeles', 'New York', 'Chicago'],
-                    'state': ['CA', 'NY', 'IL'],
-                    'rating': [4.8, 4.7, 4.9],
-                    'reviews': [150, 120, 200],
-                    'phone': ['(555) 123-4567', '(555) 234-5678', '(555) 345-6789'],
-                    'full_address': ['123 Main St, Los Angeles, CA', '456 Oak Ave, New York, NY', '789 Pine Rd, Chicago, IL'],
-                    'site': ['https://abclegal.com', 'https://xyzbusiness.com', 'https://premierllc.com'],
-                    'category': ['certified public accountant', 'business management consultant', 'legal services'],
-                    'type': ['Professional Service', 'Business Consultant', 'Legal Service']
-                }
-                df = pd.DataFrame(sample_data)
-                print("Using basic fallback data")
+            # Local development - use current directory
+            csv_file = "LLC Data.csv"
+
+        print(f"Attempting to load CSV from: {csv_file}")
         
-        # Clean and filter data
-        if not df.empty:
-            print(f"Cleaning data: {len(df)} rows before cleaning")
-            df = df.dropna(subset=['name', 'city', 'state'])
-            if 'rating' in df.columns:
-                df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
-                df = df[df['rating'] > 0]  # Only businesses with ratings
+        if os.path.exists(csv_file):
+            # Use pandas to load CSV (keeping our existing pandas approach)
+            df = pd.read_csv(csv_file, low_memory=False)
+            print(f"Successfully loaded CSV: {len(df)} rows, {len(df.columns)} columns")
             
-            # Clean city and state names
-            df['city'] = df['city'].str.strip()
-            df['state'] = df['state'].str.strip()
-            print(f"Data cleaned: {len(df)} rows after cleaning")
-        
-        return df
+            # Clean and filter data
+            if not df.empty:
+                print(f"Cleaning data: {len(df)} rows before cleaning")
+                df = df.dropna(subset=['name', 'city', 'state'])
+                if 'rating' in df.columns:
+                    df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
+                    df = df[df['rating'] > 0]  # Only businesses with ratings
+                
+                # Clean city and state names
+                df['city'] = df['city'].str.strip()
+                df['state'] = df['state'].str.strip()
+                print(f"Data cleaned: {len(df)} rows after cleaning")
+            
+            return df
+        else:
+            print(f"CSV file not found at {csv_file}")
+            return create_fallback_data()
+            
     except Exception as e:
-        print(f"Error in load_data: {e}")
-        # Return empty DataFrame with required columns
-        return pd.DataFrame(columns=['name', 'city', 'state', 'rating', 'reviews', 'phone', 'full_address', 'site', 'category', 'type'])
+        print(f"Error loading CSV: {e}")
+        return create_fallback_data()
+
+def create_fallback_data():
+    """Create fallback data if CSV loading fails"""
+    print("Creating fallback data")
+    # Use embedded data if available, otherwise create basic sample data
+    if EMBEDDED_BUSINESS_DATA:
+        df = pd.DataFrame(EMBEDDED_BUSINESS_DATA)
+        print("Using embedded sample data")
+    else:
+        # Create basic sample data
+        sample_data = {
+            'name': ['ABC Legal Services', 'XYZ Business Solutions', 'Premier LLC Formation'],
+            'city': ['Los Angeles', 'New York', 'Chicago'],
+            'state': ['CA', 'NY', 'IL'],
+            'rating': [4.8, 4.7, 4.9],
+            'reviews': [150, 120, 200],
+            'phone': ['(555) 123-4567', '(555) 234-5678', '(555) 345-6789'],
+            'full_address': ['123 Main St, Los Angeles, CA', '456 Oak Ave, New York, NY', '789 Pine Rd, Chicago, IL'],
+            'site': ['https://abclegal.com', 'https://xyzbusiness.com', 'https://premierllc.com'],
+            'category': ['certified public accountant', 'business management consultant', 'legal services'],
+            'type': ['Professional Service', 'Business Consultant', 'Legal Service']
+        }
+        df = pd.DataFrame(sample_data)
+        print("Using basic fallback data")
+    
+    return df
 
 # Load data once at startup
 try:

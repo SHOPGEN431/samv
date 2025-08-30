@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 Simplified approach like ramzan repo - Direct CSV loading with minimal config"
+git commit -m "🔧 Implemented ramzan's successful Vercel approach - Environment detection and PYTHONPATH"
 
 REM Push to GitHub
 git push origin master
