@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}{{ state }} {{ category|title }} Cost Guide - LLC Directory{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item active">{{ state }} {{ category|title }} Cost Guide</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">{{ state }} {{ category|title }} Cost Guide</h1>
+            <p class="lead mb-4">
+                Everything you need to know about {{ category|lower }} costs in {{ state }}. 
+                Find local services and understand pricing for your business needs.
+            </p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="stats-card">
+                <h4>{{ businesses|length }}</h4>
+                <p class="mb-0">Local Services</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cost Information -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>{{ state }} {{ category|title }} Costs</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h5>Average Costs</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Basic Setup:</strong> $50 - $500</li>
+                                <li><strong>Professional Services:</strong> $200 - $1,500</li>
+                                <li><strong>Ongoing Maintenance:</strong> $25 - $200/month</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h5>What's Included</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Document Preparation</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Filing Services</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Compliance Support</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ongoing Guidance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle me-2"></i>Cost Factors</h6>
+                        <p class="mb-0">
+                            Costs vary based on business complexity, location within {{ state }}, 
+                            and service provider. Contact local businesses for accurate quotes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Quick Cost Calculator</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Business Type</label>
+                            <select class="form-select">
+                                <option>Simple Service Business</option>
+                                <option>Professional Practice</option>
+                                <option>Retail/Manufacturing</option>
+                                <option>Complex Multi-State</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Service Level</label>
+                            <select class="form-select">
+                                <option>Basic Setup Only</option>
+                                <option>Setup + First Year</option>
+                                <option>Complete Service Package</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" onclick="calculateCost()">
+                            Estimate Cost
+                        </button>
+                    </form>
+                    <div id="costEstimate" class="mt-3" style="display: none;">
+                        <div class="alert alert-success">
+                            <strong>Estimated Cost:</strong> <span id="estimatedCost">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Local Services -->
+<section class="container mb-5">
+    <h2 class="mb-4">Local {{ category|title }} Services in {{ state }}</h2>
+    
+    {% if businesses %}
+    <div class="row">
+        {% for business in businesses %}
+        <div class="col-lg-6 mb-4">
+            <div class="card business-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ business.name }}</h5>
+                        <span class="category-badge">{{ business.category|default('Service') }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ business.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ business.reviews }} reviews)</span>
+                    </div>
+                    
+                    <p class="location-info mb-3">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {% if business.full_address %}
+                            {{ business.full_address }}
+                        {% else %}
+                            {{ business.city }}, {{ business.state }}
+                        {% endif %}
+                    </p>
+                    
+                    {% if business.phone %}
+                    <p class="mb-2">
+                        <i class="fas fa-phone me-1"></i>
+                        <a href="tel:{{ business.phone }}" class="text-decoration-none">{{ business.phone }}</a>
+                    </p>
+                    {% endif %}
+                    
+                    {% if business.site %}
+                    <p class="mb-0">
+                        <i class="fas fa-globe me-1"></i>
+                        <a href="{{ business.site }}" target="_blank" class="text-decoration-none">Visit Website</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h3>No services found in {{ state }}</h3>
+        <p class="text-muted">Try searching for services in other states or categories.</p>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Related Guides -->
+<section class="container mb-5">
+    <h3 class="mb-4">Related Cost Guides</h3>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('cost_guide', state='california', category='llc') }}" class="btn btn-outline-primary w-100">
+                California LLC Costs
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('cost_guide', state='texas', category='llc') }}" class="btn btn-outline-primary w-100">
+                Texas LLC Costs
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('cost_guide', state='florida', category='llc') }}" class="btn btn-outline-primary w-100">
+                Florida LLC Costs
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function calculateCost() {
+    const businessType = document.querySelector('select').value;
+    const serviceLevel = document.querySelectorAll('select')[1].value;
+    
+    let baseCost = 0;
+    
+    // Base costs by business type
+    switch(businessType) {
+        case 'Simple Service Business':
+            baseCost = 100;
+            break;
+        case 'Professional Practice':
+            baseCost = 300;
+            break;
+        case 'Retail/Manufacturing':
+            baseCost = 500;
+            break;
+        case 'Complex Multi-State':
+            baseCost = 800;
+            break;
+    }
+    
+    // Service level multipliers
+    switch(serviceLevel) {
+        case 'Basic Setup Only':
+            baseCost *= 1;
+            break;
+        case 'Setup + First Year':
+            baseCost *= 1.5;
+            break;
+        case 'Complete Service Package':
+            baseCost *= 2.5;
+            break;
+    }
+    
+    document.getElementById('estimatedCost').textContent = '$' + baseCost.toLocaleString();
+    document.getElementById('costEstimate').style.display = 'block';
+}
+</script>
+{% endblock %}
+

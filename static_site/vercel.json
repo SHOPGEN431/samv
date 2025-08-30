@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "static_site/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static_site/static/$1"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/static_site/sitemap.xml"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/static_site/$1"
+    }
+  ],
+  "outputDirectory": "static_site"
+}

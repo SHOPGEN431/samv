@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - BizLLCFinder</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-gray: #ecf0f1;
+            --dark-gray: #34495e;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Sticky Northwest Banner - Always sticky at bottom */
+        .northwest-sticky-banner {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+            color: white !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0.8rem 1rem !important;
+            box-shadow: 0 -2px 20px rgba(39, 174, 96, 0.4) !important;
+            animation: pulse-glow 2s infinite;
+        }
+        
+        /* Add bottom padding to body to account for fixed banner */
+        body {
+            padding-bottom: 80px !important;
+        }
+        
+        /* Ensure footer stays above banner */
+        .footer {
+            margin-bottom: 80px !important;
+        }
+        
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .northwest-sticky-banner {
+                padding: 0.6rem 0.8rem !important;
+            }
+            
+            body {
+                padding-bottom: 70px !important;
+            }
+            
+            .footer {
+                margin-bottom: 70px !important;
+            }
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .rating {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .business-card {
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .breadcrumb {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+        }
+        
+        /* Top 3 LLC Services Styling */
+        .border-primary {
+            border-color: #5a7c9a !important;
+        }
+        
+        .bg-primary {
+            background: linear-gradient(135deg, #5a7c9a, #4a6b8a) !important;
+        }
+        
+        .card.border-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(90, 124, 154, 0.15);
+        }
+        
+        .text-success {
+            color: #27ae60 !important;
+        }
+        
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+        
+        /* Softer text colors for better readability */
+        .text-primary {
+            color: #2c5aa0 !important;
+        }
+        
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        /* Cost Calculator Styling */
+        .cost-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+        }
+        
+        .cost-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin: 0.5rem 0;
+        }
+        
+        .total-cost {
+            font-size: 2rem;
+            color: #27ae60;
+        }
+        
+        .comparison-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .table-sm th {
+            background: #e9ecef;
+            font-weight: 600;
+        }
+        
+        .gov-links .btn {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Registered Agent & S-Corp Section Styling */
+        .info-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2c5aa0;
+        }
+        
+        .tips-list .tip-item {
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 1rem;
+        }
+        
+        .tips-list .tip-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .card-header.bg-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+        }
+        
+        .comparison-calculator {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        /* Social Proof Banner Styling */
+        .alert-success {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(39, 174, 96, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(39, 174, 96, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(39, 174, 96, 0.3); }
+        }
+        
+        .btn-light {
+            background: white;
+            border: none;
+            color: #27ae60;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-light:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .badge.bg-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22) !important;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .badge.bg-danger {
+            background: linear-gradient(135deg, #2c5aa0, #1e3a5f) !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .card.border-primary .card-header {
+            position: relative;
+        }
+        
+        /* Northwest Featured Card Styling */
+        .northwest-featured {
+            transform: scale(1.05);
+            border-width: 3px !important;
+            border-color: #2c5aa0 !important;
+            box-shadow: 0 8px 25px rgba(44, 90, 160, 0.2) !important;
+            position: relative;
+            z-index: 2;
+        }
+        
+
+        
+        .northwest-featured .card-header {
+            background: linear-gradient(135deg, #2c5aa0, #1e3a5f) !important;
+        }
+        
+        .northwest-featured:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 35px rgba(44, 90, 160, 0.3) !important;
+        }
+        
+        .northwest-featured .btn-primary {
+            background: linear-gradient(135deg, #2c5aa0, #1e3a5f) !important;
+            border: none;
+        }
+        
+        .northwest-featured .btn-primary:hover {
+            background: linear-gradient(135deg, #1e3a5f, #152a45) !important;
+            transform: translateY(-2px);
+        }
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .category-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .location-info {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .reviews-count {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-building me-2"></i>BizLLCFinder
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            LLC Registration Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- Healthcare Professionals -->
+                            <li><h6 class="dropdown-header">Healthcare</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/doctors/">For Doctors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/dentists/">For Dentists</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/chiropractors/">For Chiropractors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/therapists/">For Therapists</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/nutritionists/">For Nutritionists</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/personal-trainers/">For Personal Trainers</a></li>
+                            
+                            <!-- Construction & Trades -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Construction & Trades</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/contractor/">For Contractors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/electricians/">For Electricians</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/plumbers/">For Plumbers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/roofers/">For Roofers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/painters/">For Painters</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/hvac-technicians/">For HVAC Technicians</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/landscapers/">For Landscapers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/handyman/">For Handyman</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/handymen/">For Handymen</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/drywall-installers/">For Drywall Installers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/window-installers/">For Window Installers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/insulation-companies/">For Insulation Companies</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/solar-panel-installers/">For Solar Panel Installers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/fencing-companies/">For Fencing Companies</a></li>
+                            
+                            <!-- Real Estate -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Real Estate</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/rental-properties/">For Rental Properties</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/landlords/">For Landlords</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/airbnb/">For Airbnb</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/airbnb-hosts/">For Airbnb Hosts</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/realtors/">For Realtors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/real-estate-agents/">For Real Estate Agents</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/property-management/">For Property Management</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/investment-property/">For Investment Property</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/house-flippers/">For House Flippers</a></li>
+                            
+                            <!-- E-commerce & Online Business -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">E-commerce & Online</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/ecommerce/">For Ecommerce</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/e-commerce/">For E-commerce</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/etsy/">For Etsy</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/amazon-fba/">For Amazon FBA</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/shopify/">For Shopify</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/dropshipping/">For Dropshipping</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/clothing-brand/">For Clothing Brand</a></li>
+                            
+                            <!-- Transportation -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Transportation</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/trucking/">For Trucking</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/uber/">For Uber</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/lyft/">For Lyft</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/limo/">For Limo</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/rideshare-drivers/">For Rideshare Drivers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/charter-bus-companies/">For Charter Bus Companies</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/boat-rental-businesses/">For Boat Rental Businesses</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/trucking-dispatchers/">For Trucking Dispatchers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/tour-guides/">For Tour Guides</a></li>
+                            
+                            <!-- Food & Hospitality -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Food & Hospitality</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/restaurants/">For Restaurants</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/food-trucks/">For Food Trucks</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/bakery/">For Bakery</a></li>
+                            
+                            <!-- Beauty & Personal Care -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Beauty & Personal Care</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/hair-salon/">For Hair Salon</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/salons/">For Salons</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/barbers/">For Barbers</a></li>
+                            
+                            <!-- Professional Services -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Professional Services</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/freelancers/">For Freelancers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/consultants/">For Consultants</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/photographer/">For Photographers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/event-planners/">For Event Planners</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/cleaning-businesses/">For Cleaning Businesses</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/marketing-agencies/">For Marketing Agencies</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/seo-consultants/">For SEO Consultants</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/pr-firms/">For PR Firms</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/it-consultants/">For IT Consultants</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/software-developers/">For Software Developers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/cybersecurity-firms/">For Cybersecurity Firms</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/msps/">For MSPs</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/saas-businesses/">For SaaS Businesses</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/driving-schools/">For Driving Schools</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/test-prep-tutors/">For Test Prep Tutors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/language-instructors/">For Language Instructors</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/career-coaches/">For Career Coaches</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/corporate-trainers/">For Corporate Trainers</a></li>
+                            
+                            <!-- Digital & Creative -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Digital & Creative</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/social-media-influencers/">For Social Media Influencers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/online-coaches/">For Online Coaches</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/content-creators/">For Content Creators</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/videographers/">For Videographers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/podcasters/">For Podcasters</a></li>
+                            
+                            <!-- Finance & Investment -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Finance & Investment</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/stock-trading/">For Stock Trading</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/day-trading/">For Day Trading</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/crypto-trading/">For Crypto Trading</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/financial-advisors/">For Financial Advisors</a></li>
+                            
+                            <!-- Specialized -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Specialized</h6></li>
+                            <li><a class="dropdown-item" href="/use-cases/vending-machines/">For Vending Machines</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/cannabis/">For Cannabis</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/small-business/">For Small Business</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/woodworking-businesses/">For Woodworking Businesses</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/jewelry-makers/">For Jewelry Makers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/candle-makers/">For Candle Makers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/soap-makers/">For Soap Makers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/farmers/">For Farmers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/ranchers/">For Ranchers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/beekeepers/">For Beekeepers</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/greenhouse-businesses/">For Greenhouse Businesses</a></li>
+                            <li><a class="dropdown-item" href="/use-cases/landscaping-supply-companies/">For Landscaping Supply Companies</a></li>
+                            
+                            <!-- General -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/use-cases/llc-registration/">General LLC Registration</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tools/llc-cost-calculator/">
+                                <i class="fas fa-calculator me-2"></i>LLC Cost Calculator
+                            </a></li>
+                            <li><a class="dropdown-item" href="/tools/state-comparison/">
+                                <i class="fas fa-balance-scale me-2"></i>State Comparison Tool
+                            </a></li>
+                            <li><a class="dropdown-item" href="/tools/tax-calculator/">
+                                <i class="fas fa-percentage me-2"></i>Tax Calculator
+                            </a></li>
+                            <li><a class="dropdown-item" href="/tools/compliance-tracker/">
+                                <i class="fas fa-calendar-check me-2"></i>Compliance Tracker
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/tools/llc-cost-by-state/">
+                                <i class="fas fa-map-marked-alt me-2"></i>Cost by State Guide
+                            </a></li>
+                            <li><a class="dropdown-item" href="/tools/formation-checklist/">
+                                <i class="fas fa-clipboard-list me-2"></i>Formation Checklist
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact/">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    Privacy Policy
+                </h1>
+                <p class="lead mb-4">
+                    Your privacy is important to us. Learn how BizLLCFinder protects your information and maintains transparency in our data practices.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-shield-alt fa-6x text-light opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Privacy Content -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="mb-4">Privacy Policy for BizLLCFinder</h2>
+                    <p class="text-muted mb-4">Last updated: December 2025</p>
+                    
+                    <h3 class="mb-3">Introduction</h3>
+                    <p class="mb-4">
+                        Welcome to BizLLCFinder ("we," "our," or "us"). We are committed to protecting your privacy and being transparent about our data practices. This Privacy Policy explains how we handle information when you visit our website at bizllcfinder.site.
+                    </p>
+                    
+                    <h3 class="mb-3">Information We Do NOT Collect</h3>
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>Important Notice</h5>
+                        <p class="mb-0">
+                            <strong>BizLLCFinder does not collect, store, or process any personal information from our visitors.</strong> We are committed to maintaining your privacy and anonymity while using our services.
+                        </p>
+                    </div>
+                    
+                    <p class="mb-4">
+                        We want to be clear about what we do not collect:
+                    </p>
+                    
+                    <ul class="mb-4">
+                        <li><strong>Personal Information:</strong> We do not collect names, email addresses, phone numbers, or any other personally identifiable information</li>
+                        <li><strong>Financial Information:</strong> We do not collect credit card numbers, bank account information, or any financial data</li>
+                        <li><strong>Location Data:</strong> We do not track your precise location or collect GPS coordinates</li>
+                        <li><strong>Social Media Information:</strong> We do not access your social media accounts or collect social media data</li>
+                        <li><strong>Communication Data:</strong> We do not read, store, or analyze your private communications</li>
+                    </ul>
+                    
+                    <h3 class="mb-3">Information We May Collect</h3>
+                    <p class="mb-4">
+                        The only information we may collect is standard web analytics data that helps us understand how our website is used:
+                    </p>
+                    
+                    <ul class="mb-4">
+                        <li><strong>Usage Analytics:</strong> Basic information about how visitors use our website (pages visited, time spent, etc.)</li>
+                        <li><strong>Technical Information:</strong> Browser type, device type, and general location (city/state level only)</li>
+                        <li><strong>Cookies:</strong> Essential cookies for website functionality (no tracking cookies)</li>
+                    </ul>
+                    
+                    <h3 class="mb-3">How We Use Information</h3>
+                    <p class="mb-4">
+                        Any non-personal information we collect is used solely to:
+                    </p>
+                    
+                    <ul class="mb-4">
+                        <li>Improve our website functionality and user experience</li>
+                        <li>Analyze website performance and identify areas for improvement</li>
+                        <li>Ensure our website works properly across different devices and browsers</li>
+                        <li>Provide relevant LLC formation information and resources</li>
+                    </ul>
+                    
+                    <h3 class="mb-3">Third-Party Services</h3>
+                    <p class="mb-4">
+                        Our website may contain links to third-party services and resources:
+                    </p>
+                    
+                    <ul class="mb-4">
+                        <li><strong>External Links:</strong> We provide links to LLC formation services and government resources</li>
+                        <li><strong>Google Forms:</strong> Our contact form uses Google Forms (subject to Google's privacy policy)</li>
+                        <li><strong>No Data Sharing:</strong> We do not share any information with third parties</li>
+                    </ul>
+                    
+                    <h3 class="mb-3">Data Security</h3>
+                    <p class="mb-4">
+                        While we do not collect personal information, we maintain appropriate security measures to protect our website and any non-personal data we may process.
+                    </p>
+                    
+                    <h3 class="mb-3">Your Rights</h3>
+                    <p class="mb-4">
+                        Since we do not collect personal information, there is no personal data to access, modify, or delete. However, you have the right to:
+                    </p>
+                    
+                    <ul class="mb-4">
+                        <li>Contact us with any questions about our privacy practices</li>
+                        <li>Request information about what data we may collect</li>
+                        <li>Opt out of any analytics tracking (if applicable)</li>
+                        <li>Report any privacy concerns</li>
+                    </ul>
+                    
+                    <h3 class="mb-3">Children's Privacy</h3>
+                    <p class="mb-4">
+                        Our website is not intended for children under 13 years of age. We do not knowingly collect any information from children under 13.
+                    </p>
+                    
+                    <h3 class="mb-3">Changes to This Policy</h3>
+                    <p class="mb-4">
+                        We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last updated" date. We encourage you to review this policy periodically.
+                    </p>
+                    
+                    <h3 class="mb-3">Contact Us</h3>
+                    <p class="mb-4">
+                        If you have any questions about this Privacy Policy or our privacy practices, please contact us through our contact form on the website.
+                    </p>
+                    
+                    <div class="alert alert-success">
+                        <h5><i class="fas fa-check-circle me-2"></i>Our Commitment</h5>
+                        <p class="mb-0">
+                            At BizLLCFinder, we believe in transparency and protecting your privacy. We are committed to maintaining a website that provides valuable LLC formation resources without compromising your personal information.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 2rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Privacy Highlights</h4>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-ban text-danger me-2"></i>We Don't Collect:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Personal information</li>
+                            <li>• Financial data</li>
+                            <li>• Location tracking</li>
+                            <li>• Social media data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-shield-alt text-success me-2"></i>We Protect:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Your privacy</li>
+                            <li>• Your anonymity</li>
+                            <li>• Your browsing data</li>
+                        </ul>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="/" class="text-decoration-none">
+                                <i class="fas fa-home me-2 text-primary"></i>Home
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/about/" class="text-decoration-none">
+                                <i class="fas fa-info-circle me-2 text-primary"></i>About Us
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/contact/" class="text-decoration-none">
+                                <i class="fas fa-envelope me-2 text-primary"></i>Contact Us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-building me-2"></i>BizLLCFinder</h5>
+                    <p>Find the best LLC formation services for all business types. Professional services tailored to your specific industry needs across all 50 states and DC.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Home</a></li>
+                        <li><a href="/about/" class="text-light">About Us</a></li>
+                        <li><a href="/contact/" class="text-light">Contact Us</a></li>
+                        <li><a href="/use-cases/doctors/" class="text-light">LLC for Doctors</a></li>
+                        <li><a href="/use-cases/rental-properties/" class="text-light">LLC for Rental Properties</a></li>
+                        <li><a href="/tools/llc-cost-calculator/" class="text-light">Cost Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/tools/llc-cost-by-state/" class="text-light">LLC Cost Calculator</a></li>
+                        <li><a href="/tools/foreign-qualification-cost/" class="text-light">Foreign Qualification</a></li>
+                        <li><a href="/tools/llc-vs-s-corp-tax-savings/" class="text-light">Tax Savings Calculator</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <p>&copy; 2025 BizLLCFinder. All rights reserved. | 
+                    <a href="/privacy/" class="text-light">Privacy Policy</a> | 
+                    <a href="/disclosure/" class="text-light">Disclosures</a> | 
+                    <a href="/terms/" class="text-light">Terms & Conditions</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Sticky Northwest Banner -->
+    <script>
+        // Ensure Northwest banner is always sticky at bottom
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            
+            // Create sticky Northwest banner
+            function createStickyBanner() {
+                // Remove existing banner if any
+                const existingBanner = document.querySelector('.northwest-sticky-banner');
+                if (existingBanner) {
+                    existingBanner.remove();
+                }
+                
+                // Create new sticky banner
+                const stickyBanner = document.createElement('div');
+                stickyBanner.className = 'northwest-sticky-banner';
+                stickyBanner.innerHTML = `
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="mb-1">
+                                    <i class="fas fa-fire me-2"></i>
+                                    <strong>🔥 ${Math.floor(Math.random() * 50) + 25} people chose Northwest Registered Agent today!</strong>
+                                </h6>
+                                <p class="mb-0 small">Join thousands of entrepreneurs who trust Northwest for their LLC formation. Start your LLC today!</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <a href="https://consumer-champion.org/LLCwebsite" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Start LLC Today
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to body
+                document.body.appendChild(stickyBanner);
+                
+                // Adjust body padding based on screen size
+                if (window.innerWidth <= 768) {
+                    body.style.paddingBottom = '70px';
+                } else {
+                    body.style.paddingBottom = '80px';
+                }
+            }
+            
+            // Initial setup
+            createStickyBanner();
+            
+            // Handle window resize
+            window.addEventListener('resize', createStickyBanner);
+            
+            // Ensure proper positioning after page load
+            setTimeout(createStickyBanner, 100);
+        });
+    </script>
+    
+    
+</body>
+</html>

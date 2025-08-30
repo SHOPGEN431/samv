@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Best {{ category|title }} Services for {{ use_case|title }} - LLC Directory{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Best {{ category|title }} for {{ use_case|title }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">Best {{ category|title }} Services for {{ use_case|title }}</h1>
+            <p class="lead mb-4">
+                Discover the top-rated {{ category|lower }} services specifically recommended for {{ use_case|lower }}. 
+                These businesses have been carefully selected based on ratings, reviews, and expertise.
+            </p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="stats-card">
+                <h4>{{ businesses|length }}</h4>
+                <p class="mb-0">Top Services</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Top Services -->
+<section class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Top {{ category|title }} Services for {{ use_case|title }}</h2>
+        </div>
+    </div>
+    
+    {% if businesses %}
+    <div class="row">
+        {% for business in businesses %}
+        <div class="col-lg-6 mb-4">
+            <div class="card business-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ business.name }}</h5>
+                        <span class="category-badge">{{ business.category|default('Service') }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="rating">
+                            <i class="fas fa-star"></i> {{ business.rating }}
+                        </span>
+                        <span class="reviews-count ms-2">({{ business.reviews }} reviews)</span>
+                    </div>
+                    
+                    <p class="location-info mb-3">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {% if business.full_address %}
+                            {{ business.full_address }}
+                        {% else %}
+                            {{ business.city }}, {{ business.state }}
+                        {% endif %}
+                    </p>
+                    
+                    {% if business.phone %}
+                    <p class="mb-2">
+                        <i class="fas fa-phone me-1"></i>
+                        <a href="tel:{{ business.phone }}" class="text-decoration-none">{{ business.phone }}</a>
+                    </p>
+                    {% endif %}
+                    
+                    {% if business.site %}
+                    <p class="mb-0">
+                        <i class="fas fa-globe me-1"></i>
+                        <a href="{{ business.site }}" target="_blank" class="text-decoration-none">Visit Website</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h3>No services found</h3>
+        <p class="text-muted">We're working on finding the best services for {{ use_case|lower }}.</p>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Related Use Cases -->
+<section class="container mb-5">
+    <h3 class="mb-4">Other Use Cases</h3>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('best_for_use_case', category='llc', use_case='doctors') }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-user-md me-2"></i>Best for Doctors
+            </a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('best_for_use_case', category='llc', use_case='rental-properties') }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-home me-2"></i>Best for Rental Properties
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container mb-5">
+    <div class="card bg-primary text-white text-center">
+        <div class="card-body py-4">
+            <h4 class="card-title">Need More Options?</h4>
+            <p class="card-text">Browse all {{ category|lower }} services or search by location.</p>
+            <a href="{{ url_for('use_case_hub', category=use_case) }}" class="btn btn-light">
+                Browse All {{ use_case|title }} Services
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
