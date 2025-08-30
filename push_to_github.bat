@@ -5,7 +5,7 @@ REM Add all files
 git add .
 
 REM Commit changes
-git commit -m "🔧 Fix Vercel CSV loading error - Added robust data handling and fallback data"
+git commit -m "🔧 Fix Vercel CSV loading error - Added embedded data and multiple fallback systems"
 
 REM Push to GitHub
 git push origin master

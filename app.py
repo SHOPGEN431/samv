@@ -4,6 +4,12 @@ import os
 from collections import defaultdict
 import re
 
+# Import embedded data as fallback
+try:
+    from data_embedded import EMBEDDED_BUSINESS_DATA
+except ImportError:
+    EMBEDDED_BUSINESS_DATA = None
+
 app = Flask(__name__)
 
 # Load and process the CSV data
@@ -14,39 +20,53 @@ def load_data():
             os.path.join(os.path.dirname(__file__), 'LLC Data.csv'),
             'LLC Data.csv',
             os.path.join(os.getcwd(), 'LLC Data.csv'),
-            '/var/task/LLC Data.csv'  # Vercel serverless path
+            '/var/task/LLC Data.csv',  # Vercel serverless path
+            '/tmp/LLC Data.csv'  # Alternative Vercel path
         ]
         
         df = None
+        csv_loaded = False
+        
         for csv_path in possible_paths:
             try:
                 if os.path.exists(csv_path):
-                    df = pd.read_csv(csv_path)
+                    print(f"Attempting to load CSV from: {csv_path}")
+                    # Read CSV in chunks to handle large files
+                    df = pd.read_csv(csv_path, low_memory=False)
                     print(f"Successfully loaded CSV from: {csv_path}")
+                    print(f"CSV contains {len(df)} rows and {len(df.columns)} columns")
+                    csv_loaded = True
                     break
             except Exception as e:
                 print(f"Failed to load from {csv_path}: {e}")
                 continue
         
-        if df is None or df.empty:
-            print("Could not load CSV file, creating sample data")
-            # Create sample data for demonstration
-            sample_data = {
-                'name': ['Sample Business 1', 'Sample Business 2', 'Sample Business 3'],
-                'city': ['Los Angeles', 'New York', 'Chicago'],
-                'state': ['CA', 'NY', 'IL'],
-                'rating': [4.5, 4.2, 4.8],
-                'reviews': [100, 85, 120],
-                'phone': ['(555) 123-4567', '(555) 234-5678', '(555) 345-6789'],
-                'full_address': ['123 Main St, Los Angeles, CA', '456 Oak Ave, New York, NY', '789 Pine Rd, Chicago, IL'],
-                'site': ['https://example1.com', 'https://example2.com', 'https://example3.com'],
-                'category': ['doctors', 'doctors', 'doctors'],
-                'type': ['Medical', 'Medical', 'Medical']
-            }
-            df = pd.DataFrame(sample_data)
+        if not csv_loaded or df is None or df.empty:
+            print("Could not load real CSV file, using embedded sample data")
+            # Use embedded data if available, otherwise create basic sample data
+            if EMBEDDED_BUSINESS_DATA:
+                df = pd.DataFrame(EMBEDDED_BUSINESS_DATA)
+                print("Using embedded sample data")
+            else:
+                # Create basic sample data as fallback
+                sample_data = {
+                    'name': ['ABC Legal Services', 'XYZ Business Solutions', 'Premier LLC Formation'],
+                    'city': ['Los Angeles', 'New York', 'Chicago'],
+                    'state': ['CA', 'NY', 'IL'],
+                    'rating': [4.8, 4.7, 4.9],
+                    'reviews': [150, 120, 200],
+                    'phone': ['(555) 123-4567', '(555) 234-5678', '(555) 345-6789'],
+                    'full_address': ['123 Main St, Los Angeles, CA', '456 Oak Ave, New York, NY', '789 Pine Rd, Chicago, IL'],
+                    'site': ['https://abclegal.com', 'https://xyzbusiness.com', 'https://premierllc.com'],
+                    'category': ['certified public accountant', 'business management consultant', 'legal services'],
+                    'type': ['Professional Service', 'Business Consultant', 'Legal Service']
+                }
+                df = pd.DataFrame(sample_data)
+                print("Using basic fallback data")
         
         # Clean and filter data
         if not df.empty:
+            print(f"Cleaning data: {len(df)} rows before cleaning")
             df = df.dropna(subset=['name', 'city', 'state'])
             if 'rating' in df.columns:
                 df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
@@ -55,6 +75,7 @@ def load_data():
             # Clean city and state names
             df['city'] = df['city'].str.strip()
             df['state'] = df['state'].str.strip()
+            print(f"Data cleaned: {len(df)} rows after cleaning")
         
         return df
     except Exception as e:
@@ -68,8 +89,7 @@ try:
     print(f"Loaded {len(data)} business records")
 except Exception as e:
     print(f"Error loading data: {e}")
-    # Create empty DataFrame with required columns
-    data = pd.DataFrame(columns=['name', 'city', 'state', 'rating', 'reviews', 'phone', 'full_address', 'site', 'category', 'type'])
+    data = pd.DataFrame()
 
 def get_unique_states():
     """Get list of unique states"""
@@ -818,11 +838,11 @@ def home():
     top_rated = data.nlargest(10, 'rating')[['name', 'city', 'state', 'rating', 'reviews']].to_dict('records')
     
     return render_template('home.html', 
-                         total_businesses=total_businesses,
-                         states=states,
-                         states_count=51,  # 50 states + DC
-                         top_rated=top_rated,
-                         get_state_full_name=get_state_full_name)
+                                                   total_businesses=total_businesses,
+                          states=states,
+                          states_count=51,  # 50 states + DC
+                          top_rated=top_rated,
+                          get_state_full_name=get_state_full_name)
 
 @app.route('/about/')
 def about():
