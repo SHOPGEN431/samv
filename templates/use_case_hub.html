@@ -560,15 +560,17 @@
             <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Browse by State</h5>
         </div>
         <div class="card-body">
+            <p class="text-muted mb-3">Find {{ category_info.title|default(category|title + ' LLC Services') }} in your state:</p>
             <div class="row">
-                                 {% for state in states %}
-                 <div class="col-md-3 col-sm-4 col-6 mb-2">
-                     <a href="{{ url_for('use_case_state', category=category, state=state) }}" 
-                        class="btn btn-outline-primary btn-sm w-100">
-                         {{ get_state_full_name(state) }}
-                     </a>
-                 </div>
-                 {% endfor %}
+                {% for state in states %}
+                <div class="col-md-3 col-sm-4 col-6 mb-2">
+                    <a href="/use-cases/{{ category }}/{{ state.lower().replace(' ', '-') }}/" 
+                       class="btn btn-outline-primary btn-sm w-100">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {{ get_state_full_name(state) }}
+                    </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -635,6 +637,7 @@
     </div>
     {% endif %}
 </section>
+
 
     <!-- Related LLC Services -->
     <section class="container mb-5">
