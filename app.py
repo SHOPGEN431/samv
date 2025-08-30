@@ -28,7 +28,8 @@ try:
     print(f"Loaded {len(data)} business records")
 except Exception as e:
     print(f"Error loading data: {e}")
-    data = pd.DataFrame()
+    # Create empty DataFrame with required columns
+    data = pd.DataFrame(columns=['name', 'city', 'state', 'rating', 'reviews', 'phone', 'full_address', 'site', 'category', 'type'])
 
 def get_unique_states():
     """Get list of unique states"""
@@ -856,6 +857,3 @@ def api_states():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
-
-# For Vercel deployment
-app.debug = False
