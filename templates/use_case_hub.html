@@ -564,7 +564,7 @@
             <div class="row">
                 {% for state in states %}
                 <div class="col-md-3 col-sm-4 col-6 mb-2">
-                    <a href="/use-cases/{{ category }}/{{ state.lower().replace(' ', '-') }}/" 
+                    <a href="/use-cases/{{ category }}/{{ get_state_full_name(state).lower().replace(' ', '-') }}/" 
                        class="btn btn-outline-primary btn-sm w-100">
                         <i class="fas fa-map-marker-alt me-1"></i>
                         {{ get_state_full_name(state) }}
